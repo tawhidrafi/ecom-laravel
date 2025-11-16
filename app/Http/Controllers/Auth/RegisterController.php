@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function showRegistrationForm()
+    public function index()
     {
         return view('auth.register');
     }
