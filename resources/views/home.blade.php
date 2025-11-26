@@ -90,6 +90,7 @@
                 </div>
             </div>
         </section>
+
         <div class="container mw-1620 bg-white border-radius-10">
             <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
             <section class="category-carousel container">
@@ -199,21 +200,27 @@
                                 </div>
                             </div>
                         </div><!-- /.swiper-wrapper -->
-                    </div><!-- /.swiper-container js-swiper-slider -->
+                    </div>
+                    <!-- /.swiper-container js-swiper-slider -->
 
                     <div
                         class="products-carousel__prev products-carousel__prev-1 position-absolute top-50 d-flex align-items-center justify-content-center">
                         <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_prev_md" />
                         </svg>
-                    </div><!-- /.products-carousel__prev -->
+                    </div>
+                    <!-- /.products-carousel__prev -->
+
                     <div
                         class="products-carousel__next products-carousel__next-1 position-absolute top-50 d-flex align-items-center justify-content-center">
                         <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_next_md" />
                         </svg>
-                    </div><!-- /.products-carousel__next -->
-                </div><!-- /.position-relative -->
+                    </div>
+                    <!-- /.products-carousel__next -->
+
+                </div>
+                <!-- /.position-relative -->
             </section>
 
             <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>

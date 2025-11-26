@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Mail\OtpMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\OtpMail;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
@@ -33,7 +33,7 @@ class RegisterController extends Controller
         ]);
 
         // Fire Registered event -> Laravel's listener will send verification email if you choose to
-        // event(new Registered($user));
+        //event(new Registered($user));
 
         // Optionally: generate OTP and send
         $otp = $user->generateOtp();

@@ -468,15 +468,6 @@
                         </div>
                     </div>
 
-                    <div class="header-tools__item hover-container">
-                        <a href="login.html" class="header-tools__item">
-                            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_user" />
-                            </svg>
-                        </a>
-                    </div>
-
                     <a href="wishlist.html" class="header-tools__item">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_heart" />
@@ -490,6 +481,28 @@
                         </svg>
                         <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
                     </a>
+
+                    <!-- log in button or log out button-->
+                    @auth
+                        <form action="{{ route('logout') }}" method="POST" class="header-tools__item">
+                        @csrf
+                            <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1">
+                                    <path d="M10 17L15 12L10 7" />
+                                    <path d="M15 12H3" />
+                                    <path d="M15 3H19V21H15" />
+                                </svg>
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="header-tools__item">
+                            <svg class="d-block" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <use href="#icon_user" />
+                            </svg>
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>
