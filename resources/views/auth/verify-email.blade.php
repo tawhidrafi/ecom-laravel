@@ -13,8 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset("assets/css/custom.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset("assets/front/css/custom.css") }}" type="text/css" />
 </head>
 
 <body>
@@ -52,11 +52,12 @@
 
                     <form method="POST" action="{{ route('verification.send') }}" class="needs-validation" novalidate>
                         @csrf
-                        <button class="btn btn-primary w-100 text-uppercase" type="submit">Resend Verification Email</button>
+                        <button class="btn btn-primary w-100 text-uppercase" type="submit">Resend Verification
+                            Email</button>
                     </form>
 
                     <div class="pb-3"></div>
-                
+
                     <p><a href="{{ route('login') }}">Back to Login</a></p>
 
                 </div>

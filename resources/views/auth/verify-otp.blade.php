@@ -13,8 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/css/style.css") }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset("assets/css/custom.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset("assets/front/css/custom.css") }}" type="text/css" />
 </head>
 
 <body>
@@ -41,7 +41,7 @@
                     </form>
 
                     <div class="pb-3"></div>
-                    
+
                     <div class="customer-option mt-4 text-center">
                         <span class="text-secondary">Didn't receive OTP?</span>
                         <form method="POST" action="{{ route('otp.resend') }}">
