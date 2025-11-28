@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>SurfsideMedia</title>
     <meta charset="utf-8">
-    <meta name="author" content="themesflat.com">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/animate.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/animation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/bootstrap.css') }}">
@@ -17,6 +18,9 @@
     <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/admin/images/favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/sweetalert.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/custom.css') }}">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack("styles")
 </head>
 
 <body class="body">
@@ -42,6 +46,7 @@
                             <i class="icon-menu-left"></i>
                         </div>
                     </div>
+
                     <div class="center">
                         <div class="center-item">
                             <div class="center-heading">Main Home</div>
@@ -54,6 +59,7 @@
                                 </li>
                             </ul>
                         </div>
+
                         <div class="center-item">
                             <ul class="menu-list">
                                 <li class="menu-item has-children">
@@ -161,14 +167,17 @@
                 </div>
 
                 <div class="section-content-right">
+
                     <div class="header-dashboard">
                         <div class="wrap">
                             <div class="header-left">
                                 <a href="index-2.html">
-                                    <img class="" id="logo_header_mobile" alt="" src="{{ asset('assets/admin/images/logo/logo.png') }}"
+                                    <img class="" id="logo_header_mobile" alt=""
+                                        src="{{ asset('assets/admin/images/logo/logo.png') }}"
                                         data-light="images/logo/logo.png" data-dark="images/logo/logo.png"
                                         data-width="154px" data-height="52px" data-retina="images/logo/logo.png">
                                 </a>
+
                                 <div class="button-show-hide">
                                     <i class="icon-menu-left"></i>
                                 </div>
@@ -178,9 +187,11 @@
                                         <input type="text" placeholder="Search here..." class="show-search" name="name"
                                             tabindex="2" value="" aria-required="true" required="">
                                     </fieldset>
+
                                     <div class="button-submit">
                                         <button class="" type="submit"><i class="icon-search"></i></button>
                                     </div>
+
                                     <div class="box-content-search" id="box-content-search">
                                         <ul class="mb-24">
                                             <li class="mb-14">
@@ -193,7 +204,8 @@
                                                 <ul>
                                                     <li class="product-item gap14 mb-10">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/17.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/17.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -207,7 +219,8 @@
                                                     </li>
                                                     <li class="product-item gap14 mb-10">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/18.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/18.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -221,7 +234,8 @@
                                                     </li>
                                                     <li class="product-item gap14">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/19.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/19.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -244,7 +258,8 @@
                                                 <ul>
                                                     <li class="product-item gap14 mb-10">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/20.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/20.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -258,7 +273,8 @@
                                                     </li>
                                                     <li class="product-item gap14 mb-10">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/21.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/21.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -272,7 +288,8 @@
                                                     </li>
                                                     <li class="product-item gap14 mb-10">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/22.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/22.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -286,7 +303,8 @@
                                                     </li>
                                                     <li class="product-item gap14">
                                                         <div class="image no-bg">
-                                                            <img src="{{ asset('assets/admin/images/products/23.png') }}" alt="">
+                                                            <img src="{{ asset('assets/admin/images/products/23.png') }}"
+                                                                alt="">
                                                         </div>
                                                         <div class="flex items-center justify-between gap20 flex-grow">
                                                             <div class="name">
@@ -300,10 +318,9 @@
                                         </ul>
                                     </div>
                                 </form>
-
                             </div>
-                            <div class="header-grid">
 
+                            <div class="header-grid">
                                 <div class="popup-wrap message type-header">
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -371,16 +388,14 @@
                                     </div>
                                 </div>
 
-
-
-
                                 <div class="popup-wrap user type-header">
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
                                             id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span class="header-user wg-user">
                                                 <span class="image">
-                                                    <img src="{{ asset('assets/admin/images/avatar/user-1.png') }}" alt="">
+                                                    <img src="{{ asset('assets/admin/images/avatar/user-1.png') }}"
+                                                        alt="">
                                                 </span>
                                                 <span class="flex flex-column">
                                                     <span class="body-title mb-2">Kristin Watson</span>
@@ -428,29 +443,40 @@
                                                     <div class="icon">
                                                         <i class="icon-log-out"></i>
                                                     </div>
-                                                    <div class="body-title-2">Log out</div>
+                                                    <div class="body-title-2">
+                                                        <form action="{{ route('admin.logout') }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit">Logout</button>
+                                                        </form>
+                                                    </div>
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-                    
-                    @yield('content')
+
+                    <div class="main-content">
+                        @yield('content')
+
+                        <div class="bottom-page">
+                            <div class="body-text">Copyright © 2024 SurfsideMedia</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="{{ asset('assets/admin/css/animate.min.css') }}"></script>
+    <script src="{{ asset('assets/admin/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/js/bootstrap-select.min.js') }}"></script>   
-    <script src="{{ asset('assets/admin/js/sweetalert.min.js') }}"></script>    
+    <script src="{{ asset('assets/admin/js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('assets/admin/js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/admin/js/apexcharts/apexcharts.js') }}"></script>
     <script src="{{ asset('assets/admin/js/main.js') }}"></script>
+
     <script>
         (function ($) {
 
@@ -549,6 +575,8 @@
             jQuery(window).on("resize", function () { });
         })(jQuery);
     </script>
+
+    @stack("scripts")
 </body>
 
 </html>

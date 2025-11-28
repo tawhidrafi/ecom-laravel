@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/admin/css/style.css") }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset("assets/admin/css/animate.min.css") }}" type="text/css" />
 </head>
 
