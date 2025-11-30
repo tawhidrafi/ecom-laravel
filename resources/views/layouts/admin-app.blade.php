@@ -38,7 +38,7 @@
 
                 <div class="section-menu-left">
                     <div class="box-logo">
-                        <a href="index.html" id="site-logo-inner">
+                        <a href="{{ route('admin.dashboard') }}" id="site-logo-inner">
                             <img class="" id="logo_header" alt="" src="{{ asset('assets/admin/images/logo/logo.png') }}"
                                 data-light="images/logo/logo.png" data-dark="images/logo/logo.png">
                         </a>
@@ -52,7 +52,7 @@
                             <div class="center-heading">Main Home</div>
                             <ul class="menu-list">
                                 <li class="menu-item">
-                                    <a href="index.html" class="">
+                                    <a href="{{ route('admin.dashboard') }}" class="">
                                         <div class="icon"><i class="icon-grid"></i></div>
                                         <div class="text">Dashboard</div>
                                     </a>
@@ -87,12 +87,12 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="sub-menu-item">
-                                            <a href="add-brand.html" class="">
+                                            <a href="{{ route('brands.create') }}" class="">
                                                 <div class="text">New Brand</div>
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
-                                            <a href="brands.html" class="">
+                                            <a href="{{ route('brands.index') }}" class="">
                                                 <div class="text">Brands</div>
                                             </a>
                                         </li>
@@ -116,7 +116,6 @@
                                         </li>
                                     </ul>
                                 </li>
-
                                 <li class="menu-item has-children">
                                     <a href="javascript:void(0);" class="menu-item-button">
                                         <div class="icon"><i class="icon-file-plus"></i></div>
@@ -147,14 +146,12 @@
                                         <div class="text">Coupns</div>
                                     </a>
                                 </li>
-
                                 <li class="menu-item">
                                     <a href="users.html" class="">
                                         <div class="icon"><i class="icon-user"></i></div>
                                         <div class="text">User</div>
                                     </a>
                                 </li>
-
                                 <li class="menu-item">
                                     <a href="settings.html" class="">
                                         <div class="icon"><i class="icon-settings"></i></div>

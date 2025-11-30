@@ -78,5 +78,23 @@ Route::prefix('admin')->group(function () {
         Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
         // admin routes
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        // brand routes
+        Route::get('/brands', [App\Http\Controllers\Admin\BrandController::class, 'index'])
+            ->name('brands.index');
+        Route::get('/brands/create', [App\Http\Controllers\Admin\BrandController::class, 'create'])
+            ->name('brands.create');
+        Route::post('/brands', [App\Http\Controllers\Admin\BrandController::class, 'store'])
+            ->name('brands.store');
+        Route::get('/brands/{brand}/edit', [App\Http\Controllers\Admin\BrandController::class, 'edit'])
+            ->name('brands.edit');
+        Route::put('/brands/{brand}', [App\Http\Controllers\Admin\BrandController::class, 'update'])
+            ->name('brands.update');
+        Route::delete('/brands/{brand}', [App\Http\Controllers\Admin\BrandController::class, 'destroy'])
+            ->name('brands.destroy');
     });
 });
+
+
+Route::any('{any}', function () {
+    return view('app');
+})->where('any', '^(?!assets).*$');

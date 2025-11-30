@@ -575,11 +575,12 @@
                         <li class="sub-menu__item"><a href="about-2.html" class="menu-link menu-link_us-s">About Us</a>
                         </li>
                         <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Careers</a></li>
-                        <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Affiliates</a></li>
                         <li class="sub-menu__item"><a href="blog_list1.html" class="menu-link menu-link_us-s">Blog</a>
                         </li>
                         <li class="sub-menu__item"><a href="contact-2.html" class="menu-link menu-link_us-s">Contact
                                 Us</a></li>
+                        <li class="sub-menu__item"><a href="{{ route('admin.dashboard') }}"
+                                class="menu-link menu-link_us-s">Admin</a></li>
                     </ul>
                 </div>
 
