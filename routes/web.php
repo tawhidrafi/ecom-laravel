@@ -91,10 +91,36 @@ Route::prefix('admin')->group(function () {
             ->name('brands.update');
         Route::delete('/brands/{brand}', [App\Http\Controllers\Admin\BrandController::class, 'destroy'])
             ->name('brands.destroy');
+        // category routes
+        Route::get('/categories', [App\Http\Controllers\Admin\CategoryController::class, 'index'])
+            ->name('categories.index');
+        Route::get('/categories/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])
+            ->name('categories.create');
+        Route::post('/categories', [App\Http\Controllers\Admin\CategoryController::class, 'store'])
+            ->name('categories.store');
+        Route::get('/categories/{category}/edit', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])
+            ->name('categories.edit');
+        Route::put('/categories/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])
+            ->name('categories.update');
+        Route::delete('/categories/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])
+            ->name('categories.destroy');
+        // product routes
+        Route::get('/products', [App\Http\Controllers\Admin\ProductController::class, 'index'])
+            ->name('products.index');
+        Route::get('/products/create', [App\Http\Controllers\Admin\ProductController::class, 'create'])
+            ->name('products.create');
+        Route::post('/products', [App\Http\Controllers\Admin\ProductController::class, 'store'])
+            ->name('products.store');
+        Route::get('/products/{product}/edit', [App\Http\Controllers\Admin\ProductController::class, 'edit'])
+            ->name('products.edit');
+        Route::put('/products/{product}', [App\Http\Controllers\Admin\ProductController::class, 'update'])
+            ->name('products.update');
+        Route::delete('/products/{product}', [App\Http\Controllers\Admin\ProductController::class, 'destroy'])
+            ->name('products.destroy');
     });
 });
 
 
 Route::any('{any}', function () {
-    return view('app');
+    return view('layouts.app');
 })->where('any', '^(?!assets).*$');

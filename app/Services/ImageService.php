@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Brand;
+namespace App\Services;
 
 use Intervention\Image\Laravel\Facades\Image;
 

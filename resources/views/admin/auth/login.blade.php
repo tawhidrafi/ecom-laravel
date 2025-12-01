@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify OTP</title>
+    <title>Admin login</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
@@ -50,7 +50,7 @@
 
                         <div class="form-floating mb-3">
                             <input class="form-control form-control_gray" type="email" name="email"
-                                value="{{ old('email') }}" required="" autocomplete="email" autofocus="">
+                                value="admin@mail.com" required="" autocomplete="email" autofocus="">
                             <label for="email">Email address</label>
                         </div>
 

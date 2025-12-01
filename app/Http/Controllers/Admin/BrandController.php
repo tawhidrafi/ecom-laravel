@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class BrandController extends Controller
 {
     //
-    public function __construct(private \App\Services\Brand\ImageService $imageService)
+    public function __construct(private \App\Services\ImageService $imageService)
     {
     }
     // index

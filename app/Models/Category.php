@@ -4,10 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Category extends Model
 {
     //
-    protected $fillable = ['name', 'image', 'slug'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'parent_id',
+        'image',
+    ];
 
     public function products()
     {
