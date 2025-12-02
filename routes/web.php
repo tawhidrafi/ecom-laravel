@@ -13,6 +13,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 
 // Guest Routes
 Route::middleware('guest')->group(function () {
+    // Home
+    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Register
     Route::get('/register', [RegisterController::class, 'index'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
@@ -21,6 +23,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'login'])->name('login.post');
     // shop
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/product/{slug}', [ShopController::class, 'show'])->name('shop.show');
 });
 
 // Auth Routes
@@ -66,9 +69,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/dashboard', [UserController::class, 'index'])
         ->name('user.dashboard');
 });
-
-// Home
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Admin
 Route::prefix('admin')->group(function () {

@@ -247,19 +247,20 @@
             </div>
 
             <div class="shop-list flex-grow-1">
-                <div class="swiper-container js-swiper-slider slideshow slideshow_small slideshow_split" data-settings='{
-                                                                                                            "autoplay": {
-                                                                                                              "delay": 5000
-                                                                                                            },
-                                                                                                            "slidesPerView": 1,
-                                                                                                            "effect": "fade",
-                                                                                                            "loop": true,
-                                                                                                            "pagination": {
-                                                                                                              "el": ".slideshow-pagination",
-                                                                                                              "type": "bullets",
-                                                                                                              "clickable": true
-                                                                                                            }
-                                                                                                          }'>
+                <div class="swiper-container js-swiper-slider slideshow slideshow_small slideshow_split"
+                    data-settings='{
+                                                                                                                            "autoplay": {
+                                                                                                                              "delay": 5000
+                                                                                                                            },
+                                                                                                                            "slidesPerView": 1,
+                                                                                                                            "effect": "fade",
+                                                                                                                            "loop": true,
+                                                                                                                            "pagination": {
+                                                                                                                              "el": ".slideshow-pagination",
+                                                                                                                              "type": "bullets",
+                                                                                                                              "clickable": true
+                                                                                                                            }
+                                                                                                                          }'>
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
@@ -399,14 +400,16 @@
                                         data-settings='{"resizeObserver": true}'>
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
-                                                <a href="#"><img loading="lazy"
+                                                <a href="{{ route('shop.show', $product->slug) }}">
+                                                    <img loading="lazy"
                                                         src="{{ asset('assets/upload/product') . '/' . $product->image }}"
                                                         width="330" height="400" alt="Cropped Faux leather Jacket"
-                                                        class="pc__img"></a>
+                                                        class="pc__img">
+                                                </a>
                                             </div>
                                             <div class="swiper-slide">
                                                 @foreach ($product->images as $img)
-                                                    <a href="#"><img loading="lazy"
+                                                    <a href="{{ route('shop.show', $product->slug) }}"><img loading="lazy"
                                                             src="{{ asset('uploads/products/gallery') . '/' . $img }}" width="330"
                                                             height="400" alt="Cropped Faux leather Jacket" class="pc__img"></a>
                                                 @endforeach
@@ -433,7 +436,7 @@
                                     <h6 class="pc__title"><a href="#">{{ $product->name }}</a></h6>
                                     <div class="product-card__price d-flex">
                                         <span class="money price">
-                                            @if($product->sale_proice)
+                                            @if($product->sale_price)
                                                 <s> ${{ $product->price }} </s> ${{ $product->sale_price }}
                                             @else
                                                 ${{ $product->price }}
