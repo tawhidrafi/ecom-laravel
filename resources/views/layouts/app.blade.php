@@ -12,16 +12,19 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
         rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    {{-- @stack("styles") --}}
+
     <link rel="shortcut icon" href="{{ asset("assets/front/images/favicon.ico") }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset("assets/front/css/plugins/swiper.min.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset("assets/front/css/custom.css") }}" type="text/css" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @stack("styles")
 </head>
 
 <body class="gradient-bg">
@@ -314,7 +317,7 @@
                             <a href="index.html" class="navigation__link">Home</a>
                         </li>
                         <li class="navigation__item">
-                            <a href="shop.html" class="navigation__link">Shop</a>
+                            <a href="{{ route('shop.index') }}" class="navigation__link">Shop</a>
                         </li>
                         <li class="navigation__item">
                             <a href="cart.html" class="navigation__link">Cart</a>
@@ -400,7 +403,7 @@
                             <a href="{{ route('home') }}" class="navigation__link">Home</a>
                         </li>
                         <li class="navigation__item">
-                            <a href="shop.html" class="navigation__link">Shop</a>
+                            <a href="{{ route('shop.index') }}" class="navigation__link">Shop</a>
                         </li>
                         <li class="navigation__item">
                             <a href="cart.html" class="navigation__link">Cart</a>

@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\Admin\AdminLoginController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -18,7 +19,10 @@ Route::middleware('guest')->group(function () {
     // Login
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+    // shop
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 });
+
 // Auth Routes
 Route::middleware('auth')->group(function () {
     // Logout
@@ -121,6 +125,6 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::any('{any}', function () {
-    return view('layouts.app');
-})->where('any', '^(?!assets).*$');
+// Route::any('{any}', function () {
+//     return view('layouts.app');
+// })->where('any', '^(?!assets).*$');
