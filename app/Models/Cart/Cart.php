@@ -30,4 +30,12 @@ class Cart extends Model
     {
         return $this->items->sum('quantity');
     }
+
+    public function hasProduct($productId)
+    {
+        return $this->items()
+            ->where('product_id', $productId)
+            ->exists();
+    }
+
 }

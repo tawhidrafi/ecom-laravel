@@ -249,18 +249,18 @@
             <div class="shop-list flex-grow-1">
                 <div class="swiper-container js-swiper-slider slideshow slideshow_small slideshow_split"
                     data-settings='{
-                                                                                                                            "autoplay": {
-                                                                                                                              "delay": 5000
-                                                                                                                            },
-                                                                                                                            "slidesPerView": 1,
-                                                                                                                            "effect": "fade",
-                                                                                                                            "loop": true,
-                                                                                                                            "pagination": {
-                                                                                                                              "el": ".slideshow-pagination",
-                                                                                                                              "type": "bullets",
-                                                                                                                              "clickable": true
-                                                                                                                            }
-                                                                                                                          }'>
+                                                                                                                                                    "autoplay": {
+                                                                                                                                                      "delay": 5000
+                                                                                                                                                    },
+                                                                                                                                                    "slidesPerView": 1,
+                                                                                                                                                    "effect": "fade",
+                                                                                                                                                    "loop": true,
+                                                                                                                                                    "pagination": {
+                                                                                                                                                      "el": ".slideshow-pagination",
+                                                                                                                                                      "type": "bullets",
+                                                                                                                                                      "clickable": true
+                                                                                                                                                    }
+                                                                                                                                                  }'>
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
@@ -426,9 +426,33 @@
                                             </svg>
                                         </span>
                                     </div>
-                                    <button
-                                        class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart js-open-aside"
-                                        data-aside="cartDrawer" title="Add To Cart">Add To Cart</button>
+
+                                    @if($cart->hasProduct($product->id))
+                                        <a href="{{ route('cart.index') }}"
+                                            class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium">
+                                            View Cart
+                                        </a>
+                                    @else
+                                        <form name=" addtocart-form" method="post" action="{{ route('cart.add') }}">
+                                            @csrf
+
+                                            <div class="product-single__addtocart">
+                                                <div class="qty-control position-relative">
+
+                                                    <input type="number" name="quantity" value="1" min="1"
+                                                        class="qty-control__number text-center">
+                                                    <input type="number" name="product_id" value="{{ $product->id }}" hidden>
+
+                                                    <div class="qty-control__reduce">-</div>
+                                                    <div class="qty-control__increase">+</div>
+                                                </div>
+                                                <button type="submit"
+                                                    class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium"
+                                                    data-aside="cartDrawer">Add to
+                                                    Cart</button>
+                                            </div>
+                                        </form>
+                                    @endif
                                 </div>
 
                                 <div class="pc__info position-relative">

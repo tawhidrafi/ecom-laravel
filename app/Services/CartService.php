@@ -49,10 +49,8 @@ class CartService
         } else {
             $cart->items()->create([
                 'product_id' => $product->id,
-                'name' => $product->name,
                 'quantity' => $quantity,
-                'price' => $product->price,
-                'image' => $product->image ?? null,
+                'price' => $product->sale_price ?? $product->price
             ]);
         }
 

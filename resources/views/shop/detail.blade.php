@@ -126,19 +126,31 @@
                             {{ $product->short_description }}
                         </p>
                     </div>
-                    <form name="addtocart-form" method="post">
-                        <div class="product-single__addtocart">
-                            <div class="qty-control position-relative">
-                                <input type="number" name="quantity" value="1" min="1"
-                                    class="qty-control__number text-center">
-                                <div class="qty-control__reduce">-</div>
-                                <div class="qty-control__increase">+</div>
-                            </div><!-- .qty-control -->
-                            <button type="submit" class="btn btn-primary btn-addtocart js-open-aside"
-                                data-aside="cartDrawer">Add to
-                                Cart</button>
-                        </div>
-                    </form>
+
+                    @if($cart->hasProduct($product->id))
+                        <a href="{{ route('cart.index') }}">
+                            <button type="submit" class="btn btn-primary">View Cart</button>
+                        </a>
+                    @else
+                        <form name="addtocart-form" method="post" action="{{ route('cart.add') }}">
+                            @csrf
+
+                            <div class="product-single__addtocart">
+                                <div class="qty-control position-relative">
+
+                                    <input type="number" name="quantity" value="1" min="1"
+                                        class="qty-control__number text-center">
+                                    <input type="number" name="product_id" value="{{ $product->id }}" hidden>
+
+                                    <div class="qty-control__reduce">-</div>
+                                    <div class="qty-control__increase">+</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-addtocart" data-aside="cartDrawer">Add to
+                                    Cart</button>
+                            </div>
+                        </form>
+                    @endif
+
                     <div class="product-single__addtolinks">
                         <a href="#" class="menu-link menu-link_us-s add-to-wishlist"><svg width="16" height="16"
                                 viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -383,38 +395,38 @@
             <h2 class="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">Related <strong>Products</strong></h2>
             <div id="related_products" class="position-relative">
                 <div class="swiper-container js-swiper-slider" data-settings='{
-                        "autoplay": false,
-                        "slidesPerView": 4,
-                        "slidesPerGroup": 4,
-                        "effect": "none",
-                        "loop": true,
-                        "pagination": {
-                            "el": "#related_products .products-pagination",
-                            "type": "bullets",
-                            "clickable": true
-                        },
-                        "navigation": {
-                            "nextEl": "#related_products .products-carousel__next",
-                            "prevEl": "#related_products .products-carousel__prev"
-                        },
-                        "breakpoints": {
-                            "320": {
-                            "slidesPerView": 2,
-                            "slidesPerGroup": 2,
-                            "spaceBetween": 14
-                            },
-                            "768": {
-                            "slidesPerView": 3,
-                            "slidesPerGroup": 3,
-                            "spaceBetween": 24
-                            },
-                            "992": {
-                            "slidesPerView": 4,
-                            "slidesPerGroup": 4,
-                            "spaceBetween": 30
-                            }
-                        }
-                        }'>
+                                                                                                                    "autoplay": false,
+                                                                                                                    "slidesPerView": 4,
+                                                                                                                    "slidesPerGroup": 4,
+                                                                                                                    "effect": "none",
+                                                                                                                    "loop": true,
+                                                                                                                    "pagination": {
+                                                                                                                        "el": "#related_products .products-pagination",
+                                                                                                                        "type": "bullets",
+                                                                                                                        "clickable": true
+                                                                                                                    },
+                                                                                                                    "navigation": {
+                                                                                                                        "nextEl": "#related_products .products-carousel__next",
+                                                                                                                        "prevEl": "#related_products .products-carousel__prev"
+                                                                                                                    },
+                                                                                                                    "breakpoints": {
+                                                                                                                        "320": {
+                                                                                                                        "slidesPerView": 2,
+                                                                                                                        "slidesPerGroup": 2,
+                                                                                                                        "spaceBetween": 14
+                                                                                                                        },
+                                                                                                                        "768": {
+                                                                                                                        "slidesPerView": 3,
+                                                                                                                        "slidesPerGroup": 3,
+                                                                                                                        "spaceBetween": 24
+                                                                                                                        },
+                                                                                                                        "992": {
+                                                                                                                        "slidesPerView": 4,
+                                                                                                                        "slidesPerGroup": 4,
+                                                                                                                        "spaceBetween": 30
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    }'>
                     <div class="swiper-wrapper">
                         @foreach ($products as $product)
                             <div class="swiper-slide product-card">

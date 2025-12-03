@@ -12,19 +12,30 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
+// Home
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// shop
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/product/{slug}', [ShopController::class, 'show'])->name('shop.show');
+
 // Guest Routes
 Route::middleware('guest')->group(function () {
-    // Home
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     // Register
     Route::get('/register', [RegisterController::class, 'index'])->name('register');
     Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
     // Login
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-    // shop
-    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/product/{slug}', [ShopController::class, 'show'])->name('shop.show');
+    // Password Reset Routes
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])
+        ->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+        ->name('password.email');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'index'])
+        ->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+        ->name('password.update');
 });
 
 // Auth Routes
@@ -57,15 +68,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/otp/resend', [OtpController::class, 'resend'])
         ->middleware(['throttle:3,1'])
         ->name('otp.resend');
-    // Password Reset Routes
-    Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])
-        ->name('password.request');
-    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-        ->name('password.email');
-    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'index'])
-        ->name('password.reset');
-    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
-        ->name('password.update');
     // user routes
     Route::get('/user/dashboard', [UserController::class, 'index'])
         ->name('user.dashboard');
