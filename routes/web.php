@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\Admin\AdminLoginController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,16 @@ Route::middleware('auth')->group(function () {
     // user routes
     Route::get('/user/dashboard', [UserController::class, 'index'])
         ->name('user.dashboard');
+});
+
+// Cart
+Route::middleware('auth')->group(function () {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/cart/summary/json', [CartController::class, 'summaryJson'])->name('cart.summary.json');
 });
 
 // Admin

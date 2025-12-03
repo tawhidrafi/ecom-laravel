@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Cart\Cart;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,5 +45,10 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->otp = null;
         $this->otp_expires_at = null;
         $this->save();
+    }
+
+    public function cart()
+    {
+        return $this->hasOne(Cart::class);
     }
 }
