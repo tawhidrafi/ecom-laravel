@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WishList;
 
 use App\Http\Controllers\Controller;
 use App\Services\WishListService;
+use Auth;
 use Illuminate\Http\Request;
 
 class WishListController extends Controller
@@ -19,8 +20,9 @@ class WishListController extends Controller
     {
         //
         $wishList = $this->wishList->getOrCreateWishList();
+        $cart = auth()->user()->cart()->with('items')->first();
 
-        return view('wishList.index', ['wishList' => $wishList, 'items' => $wishList->items]);
+        return view('wishList.index', ['wishList' => $wishList, 'items' => $wishList->items, 'cart' => $cart]);
     }
 
     public function add(Request $request)

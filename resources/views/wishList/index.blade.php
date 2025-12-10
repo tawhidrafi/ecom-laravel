@@ -37,13 +37,32 @@
                                 ${{ $item->product->price }}
                             @endif
                         </td>
-                        <td>
-                            <div>
+                        <td class="flex">
+                            <div style="display: inline-block; margin-right: 25px;">
                                 <form action="{{ route('wishlist.remove') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $item->product_id }}">
                                     <button class="btn btn-sm btn-danger">Remove</button>
                                 </form>
+                            </div>
+
+                            <div style="display: inline-block">
+                                @if($cart->hasProduct($item->product_id))
+                                    <a href="{{ route('cart.index') }}">
+                                        <button type="submit" class="btn btn-primary">View Cart</button>
+                                    </a>
+                                @else
+                                    <form name="addtocart-form" method="post" action="{{ route('cart.add') }}">
+                                        @csrf
+
+                                        <div>
+                                            <input type="number" name="quantity" value="1" min="1" hidden>
+                                            <input type="hidden" name="product_id" value="{{ $item->product_id }}">
+                                            <button type="submit" class="btn btn-primary btn-addtocart" data-aside="cartDrawer">Add to
+                                                Cart</button>
+                                        </div>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>
