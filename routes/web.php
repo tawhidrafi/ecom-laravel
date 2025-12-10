@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Admin\AdminLoginController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\WishList\WishListController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
@@ -80,7 +81,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::get('/cart/summary/json', [CartController::class, 'summaryJson'])->name('cart.summary.json');
+    //Route::get('/cart/summary/json', [CartController::class, 'summaryJson'])->name('cart.summary.json');
+});
+
+// Wishlist
+Route::middleware('auth')->group(function () {
+    Route::get('/wishlist', [WishListController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/add', [WishListController::class, 'add'])->name('wishlist.add');
+    Route::post('/wishlist/remove', [WishListController::class, 'remove'])->name('wishlist.remove');
+    Route::post('/wishlist/clear', [WishListController::class, 'clear'])->name('wishlist.clear');
+    //Route::get('/wishlist/summary/json', [CartController::class, 'summaryJson'])->name('wishlist.summary.json');
 });
 
 // Admin

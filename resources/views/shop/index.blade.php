@@ -249,18 +249,18 @@
             <div class="shop-list flex-grow-1">
                 <div class="swiper-container js-swiper-slider slideshow slideshow_small slideshow_split"
                     data-settings='{
-                                                                                                                                                    "autoplay": {
-                                                                                                                                                      "delay": 5000
-                                                                                                                                                    },
-                                                                                                                                                    "slidesPerView": 1,
-                                                                                                                                                    "effect": "fade",
-                                                                                                                                                    "loop": true,
-                                                                                                                                                    "pagination": {
-                                                                                                                                                      "el": ".slideshow-pagination",
-                                                                                                                                                      "type": "bullets",
-                                                                                                                                                      "clickable": true
-                                                                                                                                                    }
-                                                                                                                                                  }'>
+                                                                                                                                                                            "autoplay": {
+                                                                                                                                                                              "delay": 5000
+                                                                                                                                                                            },
+                                                                                                                                                                            "slidesPerView": 1,
+                                                                                                                                                                            "effect": "fade",
+                                                                                                                                                                            "loop": true,
+                                                                                                                                                                            "pagination": {
+                                                                                                                                                                              "el": ".slideshow-pagination",
+                                                                                                                                                                              "type": "bullets",
+                                                                                                                                                                              "clickable": true
+                                                                                                                                                                            }
+                                                                                                                                                                          }'>
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
@@ -488,14 +488,39 @@
                                         <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
                                     </div>
 
-                                    <button
-                                        class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist"
-                                        title="Add To Wishlist">
-                                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <use href="#icon_heart" />
-                                        </svg>
-                                    </button>
+                                    @if($wishList->hasProduct($product->id))
+                                        <form method="post" action="{{ route('wishlist.remove') }}">
+                                            @csrf
+
+                                            <input type="number" name="product_id" value="{{ $product->id }}" hidden>
+
+                                            <button
+                                                class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist filled-heart"
+                                                title="Add To Wishlist" type="submit">
+
+                                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <use href="#icon_heart" />
+                                                </svg>
+                                            </button>
+
+                                        </form>
+                                    @else
+                                        <form name=" addtocart-form" method="post" action="{{ route('wishlist.add') }}">
+                                            @csrf
+
+                                            <input type="number" name="product_id" value="{{ $product->id }}" hidden>
+
+                                            <button
+                                                class="pc__btn-wl position-absolute top-0 end-0 bg-transparent border-0 js-add-wishlist"
+                                                title="Add To Wishlist">
+                                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <use href="#icon_heart" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
