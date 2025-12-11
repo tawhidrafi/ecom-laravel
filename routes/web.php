@@ -144,6 +144,19 @@ Route::prefix('admin')->group(function () {
             ->name('products.update');
         Route::delete('/products/{product}', [App\Http\Controllers\Admin\ProductController::class, 'destroy'])
             ->name('products.destroy');
+        // coupons
+        Route::get('/coupons', [App\Http\Controllers\Coupon\CouponController::class, 'index'])
+            ->name('coupons.index');
+        Route::get('/coupons/create', [App\Http\Controllers\Coupon\CouponController::class, 'create'])
+            ->name('coupons.create');
+        Route::post('/coupons', [App\Http\Controllers\Coupon\CouponController::class, 'store'])
+            ->name('coupons.store');
+        Route::get('/coupons/{coupon}/edit', [App\Http\Controllers\Coupon\CouponController::class, 'edit'])
+            ->name('coupons.edit');
+        Route::put('/coupons/{coupon}', [App\Http\Controllers\Coupon\CouponController::class, 'update'])
+            ->name('coupons.update');
+        Route::delete('/coupons/{coupon}', [App\Http\Controllers\Coupon\CouponController::class, 'destroy'])
+            ->name('coupons.destroy');
     });
 });
 
