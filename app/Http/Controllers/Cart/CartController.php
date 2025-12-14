@@ -17,9 +17,11 @@ class CartController extends Controller
 
     public function index()
     {
+        $summary = $this->cart->summary();
+
         $cart = $this->cart->getOrCreateCart();
 
-        return view('cart.index', ['cart' => $cart, 'items' => $cart->items, 'total' => $cart->total]);
+        return view('cart.index', compact('summary', 'cart'));
     }
 
     public function add(Request $request)
@@ -64,10 +66,5 @@ class CartController extends Controller
         $this->cart->clear();
 
         return redirect()->back()->with('success', 'Cart cleared');
-    }
-
-    public function summaryJson()
-    {
-        return response()->json($this->cart->summary());
     }
 }

@@ -91,10 +91,36 @@ class CartService
     {
         $cart = $this->getOrCreateCart();
 
+        $subtotal = (float) $cart->total;
+        $discount = 0;
+
+        $coupon = $cart->coupon;
+
+        if ($coupon) {
+            if ($coupon->expiry_date && \Carbon\Carbon::parse($coupon->expiry_date)->isPast()) {
+                $coupon = null;
+            } else if ($subtotal < (float) $coupon->min_purchase) {
+                $coupon = null;
+            } else {
+                if ($coupon->type === 'fixed') {
+                    $discount = $coupon->amount;
+                }
+
+                if ($coupon->type === 'percentage') {
+                    $discount = $subtotal * ($coupon->amount / 100);
+                }
+            }
+        }
+
+        $discount = min($discount, $subtotal);
+
+        $total = $subtotal - $discount;
 
         return [
-            'count' => $cart->count,
-            'total' => (float) $cart->total,
+            'subtotal' => (float) $subtotal,
+            'discount' => (float) $discount,
+            'total' => (float) $total,
+            'coupon' => $coupon
         ];
     }
 }

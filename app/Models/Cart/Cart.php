@@ -2,12 +2,13 @@
 
 namespace App\Models\Cart;
 
+use App\Models\Coupon\Coupon;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $fillable = ['user_id'];
+    protected $fillable = ['user_id', 'coupon_id'];
 
     public function user()
     {
@@ -17,6 +18,11 @@ class Cart extends Model
     public function items()
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    public function coupon()
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     public function getTotalAttribute()
@@ -37,5 +43,4 @@ class Cart extends Model
             ->where('product_id', $productId)
             ->exists();
     }
-
 }

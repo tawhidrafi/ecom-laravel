@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class CouponController extends Controller
 {
+    protected $couponService;
+    public function __construct(\App\Services\CouponService $couponService)
+    {
+        $this->couponService = $couponService;
+    }
+
     // index page
     public function index()
     {
@@ -81,5 +87,28 @@ class CouponController extends Controller
         $coupon->delete();
 
         return redirect()->route('coupons.index')->with('success', 'Coupon deleted successfully.');
+    }
+    // apply 
+    public function apply(Request $request)
+    {
+        $validated = $request->validate([
+            'code' => 'required|string|max:255',
+        ]);
+
+        $result = $this->couponService->applyCoupon($request->code);
+
+        if (!$result['success']) {
+            return redirect()->back()->with('error', $result['message']);
+        }
+
+        return redirect()->back()->with('success', $result['message']);
+    }
+
+    //remove
+    public function remove()
+    {
+        $this->couponService->removeCoupon();
+
+        return redirect()->back()->with('success', 'Coupon removed successfully.');
     }
 }

@@ -2,6 +2,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\Admin\AdminLoginController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Coupon\CouponController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WishList\WishListController;
@@ -82,6 +83,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     //Route::get('/cart/summary/json', [CartController::class, 'summaryJson'])->name('cart.summary.json');
+});
+
+// Coupon
+Route::middleware('auth')->group(function () {
+    Route::post('/cart/apply-coupon', [CouponController::class, 'apply'])->name('coupon.apply');
+    Route::put('/cart/remove-coupon', [CouponController::class, 'remove'])->name('coupon.remove');
 });
 
 // Wishlist
