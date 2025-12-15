@@ -98,7 +98,7 @@
                 </div>
                 <hr>
 
-                <a href="{{ '#' }}" class="btn btn-success btn-block">Proceed to Checkout</a>
+                <a href="{{ route('checkout.index', $cart) }}" class="btn btn-success btn-block">Proceed to Checkout</a>
 
                 <form action="{{ route('cart.clear') }}" method="POST" style="margin-top:8px;">
                     @csrf

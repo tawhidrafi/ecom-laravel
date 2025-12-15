@@ -3,6 +3,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\Admin\AdminLoginController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Checkout\AddressController;
+use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Coupon\CouponController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\User\UserController;
@@ -109,6 +110,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/addresses/{address}/edit', [AddressController::class, 'edit'])->name('address.edit');
     Route::put('/addresses/{address}', [AddressController::class, 'update'])->name('address.update');
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('address.destroy');
+});
+
+// checkout
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout/{cart}', [CheckoutController::class, 'index'])->name('checkout.index');
 });
 
 // Admin

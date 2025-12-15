@@ -18,12 +18,12 @@ class AddressController extends Controller
     {
         $addresses = $this->user->addresses;
 
-        return view('checkout.address.index', compact('addresses'));
+        return view('address.index', compact('addresses'));
     }
     // create
     public function create()
     {
-        return view('checkout.address.create');
+        return view('address.create');
     }
     // store 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class AddressController extends Controller
     // edit 
     public function edit(Address $address)
     {
-        return view('checkout.address.edit', compact('address'));
+        return view('address.edit', compact('address'));
     }
     // update 
     public function update(Address $address)

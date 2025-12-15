@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
 {
-    //
     protected $fillable = [
         'name',
         'code',
@@ -16,9 +15,8 @@ class Coupon extends Model
         'expiry_date'
     ];
 
-    //
-    // public function order()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    public function order()
+    {
+        return $this->hasMany(\App\Models\Checkout\Order::class);
+    }
 }
