@@ -2,6 +2,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\Admin\AdminLoginController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Checkout\AddressController;
 use App\Http\Controllers\Coupon\CouponController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\User\UserController;
@@ -71,7 +72,7 @@ Route::middleware('auth')->group(function () {
         ->middleware(['throttle:3,1'])
         ->name('otp.resend');
     // user routes
-    Route::get('/user/dashboard', [UserController::class, 'index'])
+    Route::get('dashboard', [UserController::class, 'index'])
         ->name('user.dashboard');
 });
 
@@ -98,6 +99,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/wishlist/remove', [WishListController::class, 'remove'])->name('wishlist.remove');
     Route::post('/wishlist/clear', [WishListController::class, 'clear'])->name('wishlist.clear');
     //Route::get('/wishlist/summary/json', [CartController::class, 'summaryJson'])->name('wishlist.summary.json');
+});
+
+//Address
+Route::middleware('auth')->group(function () {
+    Route::get('/addresses', [AddressController::class, 'index'])->name('address.index');
+    Route::get('/addresses/create', [AddressController::class, 'create'])->name('address.create');
+    Route::post('/addresses', [AddressController::class, 'store'])->name('address.store');
+    Route::get('/addresses/{address}/edit', [AddressController::class, 'edit'])->name('address.edit');
+    Route::put('/addresses/{address}', [AddressController::class, 'update'])->name('address.update');
+    Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('address.destroy');
 });
 
 // Admin
@@ -166,8 +177,3 @@ Route::prefix('admin')->group(function () {
             ->name('coupons.destroy');
     });
 });
-
-
-// Route::any('{any}', function () {
-//     return view('layouts.app');
-// })->where('any', '^(?!assets).*$');
