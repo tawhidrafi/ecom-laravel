@@ -114,7 +114,9 @@ Route::middleware('auth')->group(function () {
 
 // checkout
 Route::middleware('auth')->group(function () {
-    Route::get('/checkout/{cart}', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::get('/checkout/', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
 });
 
 // Admin

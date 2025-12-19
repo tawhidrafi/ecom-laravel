@@ -29,7 +29,9 @@
                         </span>
                     </a>
             </div>
-            <form name="checkout-form" action="">
+            <form name="checkout-form" action="{{ route('checkout.store') }}" method="POST">
+                @csrf
+
                 <div class="checkout-form">
                     <div class="billing-info__wrapper">
                         <div class="row">
@@ -43,8 +45,8 @@
                         <div class="row mt-5">
                             <div class="col-md-6">
                                 <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="name" required="">
-                                    <label for="name">Full Name *</label>
+                                    <input type="text" class="form-control" disabled value="{{ auth()->user()->name }}">
+                                    <label for="name">Full Name</label>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -55,45 +57,35 @@
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="zip" required="">
-                                    <label for="zip">Pincode *</label>
+                                    <input type="text" class="form-control" name="address" required=""
+                                        value="{{ $address ? $address->address : '' }}">
+                                    <label for="address">Address Line *</label>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-floating mt-3 mb-3">
-                                    <input type="text" class="form-control" name="state" required="">
-                                    <label for="state">State *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="city" required="">
+                                    <input type="text" class="form-control" name="city" required=""
+                                        value="{{ $address ? $address->city : '' }}">
                                     <label for="city">Town / City *</label>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="address" required="">
-                                    <label for="address">House no, Building Name *</label>
+                                    <input type="text" class="form-control" name="zip" required=""
+                                        value="{{ $address ? $address->zip : '' }}">
+                                    <label for="zip">Zipcode *</label>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="locality" required="">
-                                    <label for="locality">Road Name, Area, Colony *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="landmark" required="">
-                                    <label for="landmark">Landmark *</label>
+                                    <input type="text" class="form-control" name="country" required=""
+                                        value="{{ $address ? $address->country : '' }}">
+                                    <label for="country">Country *</label>
                                     <span class="text-danger"></span>
                                 </div>
                             </div>
@@ -151,57 +143,40 @@
                             </div>
                             <div class="checkout__payment-methods">
                                 <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio"
-                                        name="checkout_payment_method" id="checkout_payment_method_1" checked>
+                                    <input class="form-check-input form-check-input_fill" type="radio" name="method"
+                                        id="checkout_payment_method_1" value="bank">
                                     <label class="form-check-label" for="checkout_payment_method_1">
                                         Direct bank transfer
                                         <p class="option-detail">
                                             Make your payment directly into our bank account. Please use your Order ID as
-                                            the payment
-                                            reference.Your order will not be shipped until the funds have cleared in our
-                                            account.
+                                            the payment reference.Your order will not be shipped until the funds have
+                                            cleared in our account.
+                                            Account Name: XYZ,
+                                            Account Number: 123456789,
+                                            Bank Name: ABC Bank,
+                                            SWIFT Code: ABCD1234
                                         </p>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio"
-                                        name="checkout_payment_method" id="checkout_payment_method_2">
-                                    <label class="form-check-label" for="checkout_payment_method_2">
-                                        Check payments
-                                        <p class="option-detail">
-                                            Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida
-                                            nec dui. Aenean
-                                            aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra
-                                            nunc, ut aliquet
-                                            magna posuere eget.
-                                        </p>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio"
-                                        name="checkout_payment_method" id="checkout_payment_method_3">
+                                    <input class="form-check-input form-check-input_fill" type="radio" name="method"
+                                        id="checkout_payment_method_3" value="cod">
                                     <label class="form-check-label" for="checkout_payment_method_3">
                                         Cash on delivery
                                         <p class="option-detail">
-                                            Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida
-                                            nec dui. Aenean
-                                            aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra
-                                            nunc, ut aliquet
-                                            magna posuere eget.
+                                            Recieve your order at home and pay in cash to the courier.
                                         </p>
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio"
-                                        name="checkout_payment_method" id="checkout_payment_method_4">
+                                    <input class="form-check-input form-check-input_fill" type="radio" name="method"
+                                        id="checkout_payment_method_4" value="bkash/nagad">
                                     <label class="form-check-label" for="checkout_payment_method_4">
-                                        Paypal
+                                        Mobile Banking (Bkash/Nagad)
                                         <p class="option-detail">
-                                            Phasellus sed volutpat orci. Fusce eget lore mauris vehicula elementum gravida
-                                            nec dui. Aenean
-                                            aliquam varius ipsum, non ultricies tellus sodales eu. Donec dignissim viverra
-                                            nunc, ut aliquet
-                                            magna posuere eget.
+                                            Make your payment via Bkash or Nagad to the following number: 01XXXXXXXXX.
+                                            Please include your Order ID in the payment reference. Your order will be
+                                            processed once the payment is confirmed.
                                         </p>
                                     </label>
                                 </div>
@@ -213,7 +188,7 @@
                                         policy</a>.
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-checkout">PLACE ORDER</button>
+                            <button class="btn btn-primary btn-checkout" type="submit">PLACE ORDER</button>
                         </div>
                     </div>
                 </div>
