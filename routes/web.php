@@ -119,6 +119,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
 });
 
+// orders
+Route::middleware('auth')->group(function () {
+    Route::get('/user/orders', [App\Http\Controllers\UserOrderController::class, 'index'])
+        ->name('user.orders.index');
+    Route::get('user/orders/{order}', [App\Http\Controllers\UserOrderController::class, 'show'])
+        ->name('user.orders.show');
+    Route::delete('user/orders/{order}', [App\Http\Controllers\UserOrderController::class, 'cancel'])
+        ->name('user.order.cancel');
+});
+
+
 // Admin
 Route::prefix('admin')->group(function () {
     // Admin if not authenticated
@@ -183,5 +194,14 @@ Route::prefix('admin')->group(function () {
             ->name('coupons.update');
         Route::delete('/coupons/{coupon}', [App\Http\Controllers\Coupon\CouponController::class, 'destroy'])
             ->name('coupons.destroy');
+        // orders
+        Route::get('/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])
+            ->name('admin.orders.index');
+        Route::get('/orders/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])
+            ->name('admin.orders.show');
+        Route::put('/orders/{order}/update-payment-status', [App\Http\Controllers\Admin\OrderController::class, 'updatePaymentStatus'])
+            ->name('admin.orders.update-payment-status');
+        Route::put('/orders/{order}/update-delivery-status', [App\Http\Controllers\Admin\OrderController::class, 'updateDeliveryStatus'])
+            ->name('admin.orders.update-delivery-status');
     });
 });

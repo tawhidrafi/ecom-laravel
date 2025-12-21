@@ -13,6 +13,8 @@ class Transaction extends Model
         'order_id',
         'method',
         'amount',
+        'trx_id',
+        'status',
     ];
 
     public function order()
