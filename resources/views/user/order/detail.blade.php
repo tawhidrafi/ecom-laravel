@@ -157,7 +157,7 @@
                         </div>
                     </div>
 
-                    @if($order->cancelled_date === null && $order->status !== 'delivered')
+                    @if($order->cancelled_date === null && $order->status !== 'shipped' && $order->status !== 'delivered')
                         <div class="wg-box mt-5 text-right">
                             <form action="{{ route('user.order.cancel', $order) }}" method="POST">
                                 @csrf

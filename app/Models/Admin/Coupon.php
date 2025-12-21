@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Coupon;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class Coupon extends Model
 
     public function order()
     {
-        return $this->hasMany(\App\Models\Checkout\Order::class);
+        return $this->hasMany(\App\Models\User\Order::class);
     }
 }

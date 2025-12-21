@@ -66,9 +66,9 @@
                                         <td class="text-center">{{ $order->status }}</td>
                                         <td class="text-center">{{ $order->created_at }}</td>
                                         <td class="text-center">{{ $order->orderItems->count() }}</td>
-                                        <td class="text-center">{{ $order->delivered_at ?? 'Pending' }}</td>
+                                        <td class="text-center">{{ $order->delivery_date ?? 'Pending' }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('admin.orders.show', $order->id) }}">
+                                            <a href="{{ route('admin.orders.show', $order) }}">
                                                 <div class="list-icon-function view-icon">
                                                     <div class="item eye">
                                                         <i class="icon-eye"></i>

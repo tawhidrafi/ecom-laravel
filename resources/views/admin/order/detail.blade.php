@@ -126,7 +126,7 @@
                 <table class="table table-striped table-bordered table-transaction">
                     <tbody>
                         <tr>
-                            @if ($order->transaction && $order->transaction->status === 'pending')
+                            @if ($order->transaction && $order->transaction->status === 'pending' && $order->status !== 'cancelled')
                                 <th>Trx Id/ Reference Id (If any)</th>
                                 <form action="{{ route('admin.orders.update-payment-status', $order) }}"
                                     id="payment_status_form" method="POST">
@@ -155,8 +155,8 @@
                         </tr>
                         <tr>
                             <th>Shipping Status</th>
-                            <td>{{ $order->delivery_date ?? 'Not shipped' }}</td>
-                            @if ($order->transaction && $order->transaction->status === 'pending')
+                            <td>{{ $order->delivery_date ?? 'Not delivered' }}</td>
+                            @if ($order->status !== 'delivered' && $order->status !== 'cancelled')
                                 <form action="{{ route('admin.orders.update-delivery-status', $order) }}"
                                     id="delivery_status_form" method="POST">
                                     @csrf

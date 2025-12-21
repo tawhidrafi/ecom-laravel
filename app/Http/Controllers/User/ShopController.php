@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use App\Models\Admin\Product;
+use Auth;
 
 class ShopController extends Controller
 {
@@ -17,7 +17,7 @@ class ShopController extends Controller
             ->with(['category', 'brand'])
             ->paginate(10);
 
-        return view('shop.index', compact('products', 'cart', 'wishList'));
+        return view('user.shop.index', compact('products', 'cart', 'wishList'));
     }
     // show
     public function show($slug)
@@ -28,6 +28,6 @@ class ShopController extends Controller
             ->with(['category', 'brand'])
             ->first();
         $products = Product::where('slug', '<>', $slug)->get()->take(8);
-        return view('shop.detail', compact('product', 'products', 'cart', 'wishList'));
+        return view('user.shop.detail', compact('product', 'products', 'cart', 'wishList'));
     }
 }

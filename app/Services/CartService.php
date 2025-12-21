@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Cart\Cart;
-use App\Models\Cart\CartItem;
-use App\Models\Product;
+use App\Models\User\Cart;
+use App\Models\Admin\Product;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CartService
 {

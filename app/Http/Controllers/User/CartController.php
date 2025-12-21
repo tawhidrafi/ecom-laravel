@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Cart;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Services\CartService;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -21,7 +21,7 @@ class CartController extends Controller
 
         $cart = $this->cart->getOrCreateCart();
 
-        return view('cart.index', compact('summary', 'cart'));
+        return view('user.cart.index', compact('summary', 'cart'));
     }
 
     public function add(Request $request)

@@ -1,14 +1,22 @@
 <?php
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Auth\Admin\AdminLoginController;
-use App\Http\Controllers\Cart\CartController;
-use App\Http\Controllers\Checkout\AddressController;
-use App\Http\Controllers\Checkout\CheckoutController;
-use App\Http\Controllers\Coupon\CouponController;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\WishList\WishListController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CouponController;
+
+use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\AddressController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\ShopController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\UserOrderController;
+use App\Http\Controllers\User\WishListController;
+
+use App\Http\Controllers\Auth\Admin\AdminLoginController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\OtpController;
@@ -17,7 +25,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
 // Home
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\User\HomeController::class, 'index'])->name('home');
 
 // shop
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
@@ -84,7 +92,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    //Route::get('/cart/summary/json', [CartController::class, 'summaryJson'])->name('cart.summary.json');
 });
 
 // Coupon
@@ -99,7 +106,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/wishlist/add', [WishListController::class, 'add'])->name('wishlist.add');
     Route::post('/wishlist/remove', [WishListController::class, 'remove'])->name('wishlist.remove');
     Route::post('/wishlist/clear', [WishListController::class, 'clear'])->name('wishlist.clear');
-    //Route::get('/wishlist/summary/json', [CartController::class, 'summaryJson'])->name('wishlist.summary.json');
 });
 
 //Address
@@ -116,19 +122,14 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/checkout/', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
-    Route::get('/orders/{order}', [CheckoutController::class, 'show'])->name('orders.show');
 });
 
 // orders
 Route::middleware('auth')->group(function () {
-    Route::get('/user/orders', [App\Http\Controllers\UserOrderController::class, 'index'])
-        ->name('user.orders.index');
-    Route::get('user/orders/{order}', [App\Http\Controllers\UserOrderController::class, 'show'])
-        ->name('user.orders.show');
-    Route::delete('user/orders/{order}', [App\Http\Controllers\UserOrderController::class, 'cancel'])
-        ->name('user.order.cancel');
+    Route::get('/orders', [UserOrderController::class, 'index'])->name('user.orders.index');
+    Route::get('orders/{order}', [UserOrderController::class, 'show'])->name('user.orders.show');
+    Route::delete('orders/{order}', [UserOrderController::class, 'cancel'])->name('user.order.cancel');
 });
-
 
 // Admin
 Route::prefix('admin')->group(function () {
@@ -143,65 +144,39 @@ Route::prefix('admin')->group(function () {
         // admin routes
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         // brand routes
-        Route::get('/brands', [App\Http\Controllers\Admin\BrandController::class, 'index'])
-            ->name('brands.index');
-        Route::get('/brands/create', [App\Http\Controllers\Admin\BrandController::class, 'create'])
-            ->name('brands.create');
-        Route::post('/brands', [App\Http\Controllers\Admin\BrandController::class, 'store'])
-            ->name('brands.store');
-        Route::get('/brands/{brand}/edit', [App\Http\Controllers\Admin\BrandController::class, 'edit'])
-            ->name('brands.edit');
-        Route::put('/brands/{brand}', [App\Http\Controllers\Admin\BrandController::class, 'update'])
-            ->name('brands.update');
-        Route::delete('/brands/{brand}', [App\Http\Controllers\Admin\BrandController::class, 'destroy'])
-            ->name('brands.destroy');
+        Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+        Route::get('/brands/create', [BrandController::class, 'create'])->name('brands.create');
+        Route::post('/brands', [BrandController::class, 'store'])->name('brands.store');
+        Route::get('/brands/{brand}/edit', [BrandController::class, 'edit'])->name('brands.edit');
+        Route::put('/brands/{brand}', [BrandController::class, 'update'])->name('brands.update');
+        Route::delete('/brands/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
         // category routes
-        Route::get('/categories', [App\Http\Controllers\Admin\CategoryController::class, 'index'])
-            ->name('categories.index');
-        Route::get('/categories/create', [App\Http\Controllers\Admin\CategoryController::class, 'create'])
-            ->name('categories.create');
-        Route::post('/categories', [App\Http\Controllers\Admin\CategoryController::class, 'store'])
-            ->name('categories.store');
-        Route::get('/categories/{category}/edit', [App\Http\Controllers\Admin\CategoryController::class, 'edit'])
-            ->name('categories.edit');
-        Route::put('/categories/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'update'])
-            ->name('categories.update');
-        Route::delete('/categories/{category}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])
-            ->name('categories.destroy');
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
         // product routes
-        Route::get('/products', [App\Http\Controllers\Admin\ProductController::class, 'index'])
-            ->name('products.index');
-        Route::get('/products/create', [App\Http\Controllers\Admin\ProductController::class, 'create'])
-            ->name('products.create');
-        Route::post('/products', [App\Http\Controllers\Admin\ProductController::class, 'store'])
-            ->name('products.store');
-        Route::get('/products/{product}/edit', [App\Http\Controllers\Admin\ProductController::class, 'edit'])
-            ->name('products.edit');
-        Route::put('/products/{product}', [App\Http\Controllers\Admin\ProductController::class, 'update'])
-            ->name('products.update');
-        Route::delete('/products/{product}', [App\Http\Controllers\Admin\ProductController::class, 'destroy'])
-            ->name('products.destroy');
+        Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
         // coupons
-        Route::get('/coupons', [App\Http\Controllers\Coupon\CouponController::class, 'index'])
-            ->name('coupons.index');
-        Route::get('/coupons/create', [App\Http\Controllers\Coupon\CouponController::class, 'create'])
-            ->name('coupons.create');
-        Route::post('/coupons', [App\Http\Controllers\Coupon\CouponController::class, 'store'])
-            ->name('coupons.store');
-        Route::get('/coupons/{coupon}/edit', [App\Http\Controllers\Coupon\CouponController::class, 'edit'])
-            ->name('coupons.edit');
-        Route::put('/coupons/{coupon}', [App\Http\Controllers\Coupon\CouponController::class, 'update'])
-            ->name('coupons.update');
-        Route::delete('/coupons/{coupon}', [App\Http\Controllers\Coupon\CouponController::class, 'destroy'])
-            ->name('coupons.destroy');
+        Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index');
+        Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
+        Route::post('/coupons', [CouponController::class, 'store'])->name('coupons.store');
+        Route::get('/coupons/{coupon}/edit', [CouponController::class, 'edit'])->name('coupons.edit');
+        Route::put('/coupons/{coupon}', [CouponController::class, 'update'])->name('coupons.update');
+        Route::delete('/coupons/{coupon}', [CouponController::class, 'destroy'])->name('coupons.destroy');
         // orders
-        Route::get('/orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])
-            ->name('admin.orders.index');
-        Route::get('/orders/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])
-            ->name('admin.orders.show');
-        Route::put('/orders/{order}/update-payment-status', [App\Http\Controllers\Admin\OrderController::class, 'updatePaymentStatus'])
+        Route::get('/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
+        Route::put('/orders/{order}/update-payment-status', [OrderController::class, 'updatePaymentStatus'])
             ->name('admin.orders.update-payment-status');
-        Route::put('/orders/{order}/update-delivery-status', [App\Http\Controllers\Admin\OrderController::class, 'updateDeliveryStatus'])
+        Route::put('/orders/{order}/update-delivery-status', [OrderController::class, 'updateDeliveryStatus'])
             ->name('admin.orders.update-delivery-status');
     });
 });

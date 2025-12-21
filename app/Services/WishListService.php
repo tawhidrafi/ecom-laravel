@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Product;
-use App\Models\WishList\WishList;
+use App\Models\Admin\Product;
+use App\Models\User\WishList;
 use Auth;
 
 class WishListService

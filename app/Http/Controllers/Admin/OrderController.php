@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Checkout\Order;
+use App\Models\User\Order;
 use DB;
 use Illuminate\Http\Request;
 
@@ -16,9 +16,8 @@ class OrderController extends Controller
         return view('admin.order.index', compact('orders'));
     }
 
-    public function show($id)
+    public function show(Order $order)
     {
-        $order = Order::findOrFail($id)->with(['orderItems.product', 'transaction'])->first();
         return view('admin.order.detail', compact('order'));
     }
 

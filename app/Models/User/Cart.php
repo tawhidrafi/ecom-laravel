@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Cart;
+namespace App\Models\User;
 
-use App\Models\Coupon\Coupon;
+use App\Models\Admin\Coupon;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Checkout;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Checkout\Address;
+use App\Models\User\Address;
 use Illuminate\Http\Request;
 
 class AddressController extends Controller
@@ -18,12 +18,12 @@ class AddressController extends Controller
     {
         $addresses = $this->user->addresses;
 
-        return view('address.index', compact('addresses'));
+        return view('user.address.index', compact('addresses'));
     }
     // create
     public function create()
     {
-        return view('address.create');
+        return view('user.address.create');
     }
     // store 
     public function store(Request $request)
@@ -56,7 +56,7 @@ class AddressController extends Controller
     // edit 
     public function edit(Address $address)
     {
-        return view('address.edit', compact('address'));
+        return view('user.address.edit', compact('address'));
     }
     // update 
     public function update(Address $address)

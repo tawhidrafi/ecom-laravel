@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserOrderController extends Controller
 {
@@ -10,17 +10,17 @@ class UserOrderController extends Controller
     public function index()
     {
         $orders = auth()->user()->orders()->paginate(10);
-        return view('order.index', compact('orders'));
+        return view('user.order.index', compact('orders'));
     }
 
     // show
-    public function show(\App\Models\Checkout\Order $order)
+    public function show(\App\Models\User\Order $order)
     {
-        return view('order.detail', compact('order'));
+        return view('user.order.detail', compact('order'));
     }
 
     // cancel order 
-    public function cancel(\App\Models\Checkout\Order $order)
+    public function cancel(\App\Models\User\Order $order)
     {
         $order->cancelled_date = now();
         $order->status = 'cancelled';

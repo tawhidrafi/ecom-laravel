@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Checkout;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\CartService;
@@ -25,7 +25,7 @@ class CheckoutController extends Controller
         $summary = $this->cartService->summary();
         $address = $this->user->addresses()->where('is_default', true)->first();
 
-        return view('checkout.index', compact('summary', 'cart', 'address'));
+        return view('user.checkout.index', compact('summary', 'cart', 'address'));
     }
 
     public function store(Request $request)
@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             $order = $this->checkoutService->checkout($validated);
 
             return redirect()
-                ->route('orders.show', $order)
+                ->route('user.orders.show', $order)
                 ->with('success', 'Order placed successfully');
 
         } catch (\Throwable $e) {
@@ -54,13 +54,5 @@ class CheckoutController extends Controller
                     'checkout' => $e->getMessage(),
                 ]);
         }
-    }
-    public function show($order)
-    {
-        $order = $this->user->orders()->where('id', $order)->with('orderItems', 'transaction')->firstOrFail();
-
-        dd($order);
-
-        //return view('checkout.show', compact('order'));
     }
 }

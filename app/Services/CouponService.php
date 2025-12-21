@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Cart\Cart;
-use App\Models\Coupon\Coupon;
+use App\Models\User\Cart;
+use App\Models\Admin\Coupon;
 use Auth;
 
 class CouponService

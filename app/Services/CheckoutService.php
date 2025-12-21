@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Checkout\Order;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +23,7 @@ class CheckoutService
 
         return DB::transaction(function () use ($data, $summary, $cart) {
             // create Order
-            $order = new Order();
+            $order = new \App\Models\User\Order();
             $order->user_id = $this->user->id;
             $order->phone = $data['phone'];
             $order->coupon_id = $cart->coupon_id;

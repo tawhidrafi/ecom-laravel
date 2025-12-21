@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models\WishList;
+namespace App\Models\User;
 
-use App\Models\Product;
+use App\Models\Admin\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class WishListItem extends Model
 {
-    //
     protected $fillable = ['wish_list_id', 'product_id'];
 
     public function cart()

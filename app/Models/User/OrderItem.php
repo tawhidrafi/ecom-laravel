@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Checkout;
+namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +17,6 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(\App\Models\Product::class);
+        return $this->belongsTo(\App\Models\Admin\Product::class);
     }
 }

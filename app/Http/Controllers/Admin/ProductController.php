@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Admin\Brand;
+use App\Models\Admin\Category;
+use App\Models\Admin\Product;
 use File;
 use Illuminate\Http\Request;
 

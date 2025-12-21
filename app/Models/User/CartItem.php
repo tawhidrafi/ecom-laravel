@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Cart;
+namespace App\Models\User;
 
-use App\Models\Product;
+use App\Models\Admin\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class CartItem extends Model

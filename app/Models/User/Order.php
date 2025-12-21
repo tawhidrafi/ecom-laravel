@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models\Checkout;
+namespace App\Models\User;
 
+use App\Models\Admin\Coupon;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -29,26 +31,26 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     public function orderItems()
     {
-        return $this->hasMany('App\Models\Checkout\OrderItem');
+        return $this->hasMany(OrderItem::class);
     }
 
     public function address()
     {
-        return $this->belongsTo('App\Models\Address');
+        return $this->belongsTo(Address::class);
     }
 
     public function coupon()
     {
-        return $this->belongsTo('App\Models\Coupon');
+        return $this->belongsTo(Coupon::class);
     }
 
     public function transaction()
     {
-        return $this->hasOne('App\Models\Checkout\Transaction');
+        return $this->hasOne(Transaction::class);
     }
 }
