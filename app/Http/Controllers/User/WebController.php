@@ -5,11 +5,22 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Product;
 use Auth;
+use Illuminate\Http\Request;
 
-class ShopController extends Controller
+class WebController extends Controller
 {
-    //
     public function index()
+    {
+        return view('user.home');
+    }
+
+    public function about()
+    {
+        return view('user.about');
+    }
+
+    //
+    public function shop()
     {
         $cart = Auth::user()->cart()->with(['items', 'items.product'])->first();
         $wishList = Auth::user()->wishList()->with(['items', 'items.product'])->first();

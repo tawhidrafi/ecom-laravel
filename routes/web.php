@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\User\ContactController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AdminController;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\CheckoutController;
-use App\Http\Controllers\User\ShopController;
+use App\Http\Controllers\User\WebController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\User\WishListController;
@@ -24,12 +25,17 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 
-// Home
-Route::get('/', [App\Http\Controllers\User\HomeController::class, 'index'])->name('home');
+// Home & about
+Route::get('/', [App\Http\Controllers\User\WebController::class, 'index'])->name('home');
+Route::get('/about', [App\Http\Controllers\User\WebController::class, 'about'])->name('about');
 
 // shop
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/product/{slug}', [ShopController::class, 'show'])->name('shop.show');
+Route::get('/shop', [WebController::class, 'shop'])->name('shop.index');
+Route::get('/product/{slug}', [WebController::class, 'show'])->name('shop.show');
+
+// contact us
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 // Guest Routes
 Route::middleware('guest')->group(function () {
@@ -122,14 +128,22 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/checkout/', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/confirm/{order}', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
 });
 
 // orders
 Route::middleware('auth')->group(function () {
     Route::get('/orders', [UserOrderController::class, 'index'])->name('user.orders.index');
-    Route::get('orders/{order}', [UserOrderController::class, 'show'])->name('user.orders.show');
-    Route::delete('orders/{order}', [UserOrderController::class, 'cancel'])->name('user.order.cancel');
+    Route::get('/orders/{order}', [UserOrderController::class, 'show'])->name('user.orders.show');
+    Route::delete('/orders/{order}', [UserOrderController::class, 'cancel'])->name('user.order.cancel');
 });
+
+// Profile
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('/profile/', [UserController::class, 'update'])->name('user.profile.update');
+});
+
 
 // Admin
 Route::prefix('admin')->group(function () {
@@ -178,5 +192,9 @@ Route::prefix('admin')->group(function () {
             ->name('admin.orders.update-payment-status');
         Route::put('/orders/{order}/update-delivery-status', [OrderController::class, 'updateDeliveryStatus'])
             ->name('admin.orders.update-delivery-status');
+
+        // settings
+        Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
+        Route::post('/settings/', [AdminController::class, 'update'])->name('admin.settings.update');
     });
 });

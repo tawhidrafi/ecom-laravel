@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User\Order;
 use App\Services\CartService;
 use App\Services\CheckoutService;
 use Illuminate\Http\Request;
@@ -43,7 +44,7 @@ class CheckoutController extends Controller
             $order = $this->checkoutService->checkout($validated);
 
             return redirect()
-                ->route('user.orders.show', $order)
+                ->route('checkout.confirmation', $order)
                 ->with('success', 'Order placed successfully');
 
         } catch (\Throwable $e) {
@@ -54,5 +55,11 @@ class CheckoutController extends Controller
                     'checkout' => $e->getMessage(),
                 ]);
         }
+    }
+
+    // confirmation
+    public function confirmation(Order $order)
+    {
+        return view('user.checkout.confirmation', compact('order'));
     }
 }
