@@ -114,16 +114,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/wishlist/clear', [WishListController::class, 'clear'])->name('wishlist.clear');
 });
 
-//Address
-Route::middleware('auth')->group(function () {
-    Route::get('/addresses', [AddressController::class, 'index'])->name('address.index');
-    Route::get('/addresses/create', [AddressController::class, 'create'])->name('address.create');
-    Route::post('/addresses', [AddressController::class, 'store'])->name('address.store');
-    Route::get('/addresses/{address}/edit', [AddressController::class, 'edit'])->name('address.edit');
-    Route::put('/addresses/{address}', [AddressController::class, 'update'])->name('address.update');
-    Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('address.destroy');
-});
-
 // checkout
 Route::middleware('auth')->group(function () {
     Route::get('/checkout/', [CheckoutController::class, 'index'])->name('checkout.index');
@@ -198,3 +188,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/settings/', [AdminController::class, 'update'])->name('admin.settings.update');
     });
 });
+
+
+// Test Routes
+Route::get('/test/layout', fn() => view('layouts.app'));

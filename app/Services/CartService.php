@@ -82,6 +82,8 @@ class CartService
     public function clear(): void
     {
         $cart = $this->getOrCreateCart();
+        $cart->coupon_id = null;
+        $cart->save();
         $cart->items()->delete();
     }
 

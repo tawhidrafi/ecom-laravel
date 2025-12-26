@@ -36,4 +36,17 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+
+    public function scopeActive($query)
+    {
+        //return $query->where('status', 1);
+        return $this;
+    }
+
+    public function scopeFeatured($query)
+    {
+        //return $query->where('is_featured', 1);
+        return $this;
+    }
 }

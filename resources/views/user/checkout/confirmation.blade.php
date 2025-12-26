@@ -1,115 +1,144 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="pt-90">
-        <div class="mb-4 pb-4"></div>
-        <section class="shop-checkout container">
-            <h2 class="page-title">Order Received</h2>
-            <div class="checkout-steps">
-                <a href="cart.html" class="checkout-steps__item active">
-                    <span class="checkout-steps__item-number">01</span>
-                    <span class="checkout-steps__item-title">
-                        <span>Shopping Bag</span>
-                        <em>Manage Your Items List</em>
-                    </span>
-                </a>
-                <a href="checkout.html" class="checkout-steps__item active">
-                    <span class="checkout-steps__item-number">02</span>
-                    <span class="checkout-steps__item-title">
-                        <span>Shipping and Checkout</span>
-                        <em>Checkout Your Items List</em>
-                    </span>
-                </a>
-                <a href="order-confirmation.html" class="checkout-steps__item active">
-                    <span class="checkout-steps__item-number">03</span>
-                    <span class="checkout-steps__item-title">
-                        <span>Confirmation</span>
-                        <em>Review And Submit Your Order</em>
-                    </span>
-                </a>
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-8 text-center max-w-3xl mx-auto">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fa-solid fa-check text-4xl text-green-600"></i>
             </div>
-            <div class="order-complete">
-                <div class="order-complete__message">
-                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="40" cy="40" r="40" fill="#B9A16B" />
-                        <path
-                            d="M52.9743 35.7612C52.9743 35.3426 52.8069 34.9241 52.5056 34.6228L50.2288 32.346C49.9275 32.0446 49.5089 31.8772 49.0904 31.8772C48.6719 31.8772 48.2533 32.0446 47.952 32.346L36.9699 43.3449L32.048 38.4062C31.7467 38.1049 31.3281 37.9375 30.9096 37.9375C30.4911 37.9375 30.0725 38.1049 29.7712 38.4062L27.4944 40.683C27.1931 40.9844 27.0257 41.4029 27.0257 41.8214C27.0257 42.24 27.1931 42.6585 27.4944 42.9598L33.5547 49.0201L35.8315 51.2969C36.1328 51.5982 36.5513 51.7656 36.9699 51.7656C37.3884 51.7656 37.8069 51.5982 38.1083 51.2969L40.385 49.0201L52.5056 36.8996C52.8069 36.5982 52.9743 36.1797 52.9743 35.7612Z"
-                            fill="white" />
-                    </svg>
-                    <h3>Your order is completed!</h3>
-                    <p>Thank you. Your order has been received.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Thank You!</h1>
+            <p class="text-gray-600 text-lg">Your order has been placed successfully.</p>
+
+            <div
+                class="mt-8 bg-gray-50 rounded-lg p-4 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12">
+                <div>
+                    <span class="block text-xs text-gray-500 uppercase tracking-wide font-semibold">Order
+                        Number</span>
+                    <span class="block text-xl font-bold text-gray-900">#{{ $order->id }}</span>
                 </div>
-                <div class="order-info">
-                    <div class="order-info__item">
-                        <label>Order Number</label>
-                        <span>{{ $order->id }}</span>
+                <div class="hidden md:block w-px h-10 bg-gray-200"></div>
+                <div>
+                    <span class="block text-xs text-gray-500 uppercase tracking-wide font-semibold">Date</span>
+                    <span id="order-date"
+                        class="block text-xl font-bold text-gray-900">{{ $order->created_at->format('d/m/Y') }}</span>
+                </div>
+                <div class="hidden md:block w-px h-10 bg-gray-200"></div>
+                <div>
+                    <span class="block text-xs text-gray-500 uppercase tracking-wide font-semibold">Total</span>
+                    <span class="block text-xl font-bold text-gray-900">${{ $order->total }}</span>
+                </div>
+            </div>
+
+            <p class="mt-6 text-sm text-gray-500">
+                We've sent a confirmation email to <span class="font-medium text-gray-900">{{ $order->user->email }}</span>
+                with
+                your order details.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <div class="lg:col-span-2 space-y-8">
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-truck-fast text-accent"></i> Shipping Information
+                    </h2>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold text-gray-900">{{ $order->user->name }}</p>
+                            <p class="text-gray-900">Contact No: {{ $order->phone }}</p>
+                            <p class="text-gray-600 text-sm mt-1">
+                                {{ $order->address }}<br>
+                                {{ $order->city }}, {{ $order->zip }}<br>
+                                {{ $order->country }}
+                            </p>
+                        </div>
+                        <span
+                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {{ ucfirst($order->status) }}
+                        </span>
                     </div>
-                    <div class="order-info__item">
-                        <label>Date</label>
-                        <span>{{ $order->created_at->format('d/m/Y') }}</span>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Order Items</h2>
+
+                    <div class="space-y-6">
+                        @foreach ($order->orderItems as $item)
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <div>
+                                        <h4 class="font-bold text-gray-900">{{ $item->product->name }}</h4>
+                                    </div>
+                                    <p class="font-bold text-gray-900">${{ number_format($item->price, 2) }}</p>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-2">Qty: {{ $item->quantity }}</p>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="order-info__item">
-                        <label>Total</label>
-                        <span>${{ $order->total }}</span>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1 space-y-8">
+
+                <!-- Payment Summary -->
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Payment Summary</h2>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span>${{ $order->subtotal }}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Shipping</span>
+                            <span>Free shipping</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>TAX / VAT</span>
+                            <span>${{ $order->tax }}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Discount</span>
+                            <span>${{ $order->discount }}</span>
+                        </div>
                     </div>
-                    <div class="order-info__item">
-                        <label>Paymetn Method</label>
-                        <span>@if ($order->transaction->method === 'bank')
-                            {{ 'Bank transfer' }}
-                        @elseif ($order->transaction->method === 'cod')
+
+                    <div class="border-t border-gray-100 mt-4 pt-4 flex justify-between items-center">
+                        <span class="font-bold text-gray-900">Total Paid</span>
+                        <span class="font-bold text-xl text-accent">${{ $order->total }}</span>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <span class="block text-xs text-gray-500 uppercase tracking-wide font-semibold mb-1">Payment
+                            Method</span>
+                        <div class="flex items-center gap-2 text-gray-900 font-medium">
+                            @if ($order->transaction->method === 'bank')
+                                {{ 'Bank transfer' }}
+                            @elseif ($order->transaction->method === 'cod')
                                 {{'Cash on delivery'}}
                             @else
                                 {{'Bkash/Nagad'}}
                             @endif
-                        </span>
+                        </div>
                     </div>
                 </div>
-                <div class="checkout__totals-wrapper">
-                    <div class="checkout__totals">
-                        <h3>Order Details</h3>
-                        <table class="checkout-cart-items">
-                            <thead>
-                                <tr>
-                                    <th>PRODUCT</th>
-                                    <th>SUBTOTAL</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($order->orderItems as $item)
-                                    <tr>
-                                        <td>
-                                            {{ $item->product->name }} x {{ $item->quantity }}
-                                        </td>
-                                        <td>
-                                            ${{ $item->subtotal }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <table class="checkout-totals">
-                            <tbody>
-                                <tr>
-                                    <th>SUBTOTAL</th>
-                                    <td>${{ $order->subtotal }}</td>
-                                </tr>
-                                <tr>
-                                    <th>SHIPPING</th>
-                                    <td>Free shipping</td>
-                                </tr>
-                                <tr>
-                                    <th>TAX</th>
-                                    <td>${{ $order->tax }}</td>
-                                </tr>
-                                <tr>
-                                    <th>TOTAL</th>
-                                    <td>${{ $order->total }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-gray-900 mb-2">Need Help?</h3>
+                    <p class="text-sm text-gray-600 mb-4">If you have any questions regarding your order, please
+                        feel free to contact our support team.</p>
+                    <a href="{{ route('contact.index') }}"
+                        class="inline-flex items-center justify-center w-full bg-white border border-gray-300 text-gray-700 py-2 rounded text-sm font-medium hover:bg-gray-50 transition">
+                        <i class="fa-solid fa-headset mr-2"></i> Contact Support
+                    </a>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    <script></script>
+@endpush

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Category;
 use App\Models\Admin\Product;
 use Auth;
 use Illuminate\Http\Request;
@@ -11,7 +12,17 @@ class WebController extends Controller
 {
     public function index()
     {
-        return view('user.home');
+        return view('user.home', [
+            'categories' => Category::active()
+                ->select('id', 'name', 'slug', 'image')
+                ->get(),
+
+            'featuredProducts' => Product::active()
+                ->featured()
+                ->latest()
+                ->take(8)
+                ->get(),
+        ]);
     }
 
     public function about()
@@ -22,23 +33,30 @@ class WebController extends Controller
     //
     public function shop()
     {
-        $cart = Auth::user()->cart()->with(['items', 'items.product'])->first();
-        $wishList = Auth::user()->wishList()->with(['items', 'items.product'])->first();
-        $products = Product::orderBy('id', 'desc')
-            ->with(['category', 'brand'])
-            ->paginate(10);
+        $user = Auth::user();
+
+        $cart = optional($user)->cart()?->with(['items', 'items.product'])->first();
+
+        $wishList = optional($user)->wishList()?->with(['items', 'items.product'])->first();
+
+        $products = Product::with(['category', 'brand'])->latest()->paginate(10);
 
         return view('user.shop.index', compact('products', 'cart', 'wishList'));
     }
+
     // show
     public function show($slug)
     {
-        $cart = Auth::user()->cart()->with('items')->first();
-        $wishList = Auth::user()->wishList()->with('items')->first();
+        $user = Auth::user();
+
+        $cart = optional($user)->cart()?->with(['items', 'items.product'])->first();
+
+        $wishList = optional($user)->wishList()?->with(['items', 'items.product'])->first();
+
         $product = Product::where('slug', $slug)
             ->with(['category', 'brand'])
             ->first();
-        $products = Product::where('slug', '<>', $slug)->get()->take(8);
-        return view('user.shop.detail', compact('product', 'products', 'cart', 'wishList'));
+
+        return view('user.shop.detail', compact('product', 'cart', 'wishList'));
     }
 }

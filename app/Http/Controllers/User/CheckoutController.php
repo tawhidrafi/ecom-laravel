@@ -24,9 +24,8 @@ class CheckoutController extends Controller
     {
         $cart = $this->cartService->getOrCreateCart();
         $summary = $this->cartService->summary();
-        $address = $this->user->addresses()->where('is_default', true)->first();
 
-        return view('user.checkout.index', compact('summary', 'cart', 'address'));
+        return view('user.checkout.index', compact('summary', 'cart'));
     }
 
     public function store(Request $request)

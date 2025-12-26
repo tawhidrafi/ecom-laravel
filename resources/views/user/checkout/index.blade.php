@@ -1,198 +1,140 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="pt-90">
-        <div class="mb-4 pb-4"></div>
-        <section class="shop-checkout container">
-            <h2 class="page-title">Shipping and Checkout</h2>
-            <div class="checkout-steps">
-                <a href="{{ route('cart.index') }}" class="checkout-steps__item active">
-                    <span class="checkout-steps__item-number">01</span>
-                    <span class="checkout-steps__item-title">
-                        <span>Shopping Bag</span>
-                        <em>Manage Your Items List</em>
-                    </span>
-                </a>
-                <a href="#" class="checkout-steps__item active">
-                    <div>
-                        <span class="checkout-steps__item-number">02</span>
-                        <span class="checkout-steps__item-title">
-                            <span>Shipping and Checkout</span>
-                            <em>Checkout Your Items List</em>
-                        </span>
-                    </div>
-                    <a href="#" class="checkout-steps__item">
-                        <span class="checkout-steps__item-number">03</span>
-                        <span class="checkout-steps__item-title">
-                            <span>Confirmation</span>
-                            <em>Review And Submit Your Order</em>
-                        </span>
-                    </a>
-            </div>
-            <form name="checkout-form" action="{{ route('checkout.store') }}" method="POST">
-                @csrf
+    <div class="py-8 md:py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div class="checkout-form">
-                    <div class="billing-info__wrapper">
-                        <div class="row">
-                            <div class="col-6">
-                                <h4>SHIPPING DETAILS</h4>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+
+                <div class="lg:col-span-8 space-y-8">
+
+                    <h1 class="text-2xl font-bold text-gray-900">Checkout</h1>
+
+                    <form action="{{ route('checkout.store') }}" method="POST">
+                        @csrf
+
+                        <!-- Shipping Address -->
+                        <section class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-6">
+                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Shipping Address</h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                    <input type="text" disabled value="{{ auth()->user()->name }}" placeholder="Full name"
+                                        class="w-full border-gray-300 rounded-md py-2 px-3 border bg-gray-100">
+                                </div>
+
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                                    <input type="text" name="phone" required value="{{ auth()->user()->phone ?? '' }}"
+                                        placeholder="Phone" class="w-full border-gray-300 rounded-md py-2 px-3 border">
+                                </div>
+
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Address *</label>
+                                    <input type="text" name="address" required placeholder="Address"
+                                        class="w-full border-gray-300 rounded-md py-2 px-3 border">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">City *</label>
+                                    <input type="text" name="city" required placeholder="City"
+                                        class="w-full border-gray-300 rounded-md py-2 px-3 border">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">ZIP *</label>
+                                    <input type="text" name="zip" required placeholder="Zip"
+                                        class="w-full border-gray-300 rounded-md py-2 px-3 border">
+                                </div>
+
+                                <div class="md:col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Country *</label>
+                                    <input type="text" name="country" required placeholder="Country"
+                                        class="w-full border-gray-300 rounded-md py-2 px-3 border">
+                                </div>
+
                             </div>
-                            <div class="col-6">
+                        </section>
+
+                        <!-- Payment Method -->
+                        <section class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <h2 class="text-lg font-semibold text-gray-900 mb-4">Payment Method</h2>
+
+                            <div class="space-y-3">
+
+                                <label class="block border rounded-lg p-4 cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="method" value="bank" required class="mr-2">
+                                    Bank Transfer
+                                </label>
+
+                                <label class="block border rounded-lg p-4 cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="method" value="bkash/nagad" class="mr-2">
+                                    MFS (Bkash / Nagad)
+                                </label>
+
+                                <label class="block border rounded-lg p-4 cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="method" value="cod" class="mr-2">
+                                    Cash on Delivery
+                                </label>
+
+                            </div>
+
+                            <button type="submit" class="w-full mt-6 bg-primary text-white py-4 rounded-lg font-bold text-lg
+                                       hover:bg-gray-800 transition shadow-lg active:scale-95">
+                                Complete Order
+                            </button>
+                        </section>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-4">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 sticky top-24">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
+
+                        <!-- Items List -->
+                        <div class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                            @foreach ($cart->items as $item)
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-900">{{ $item->product->name }}</h4>
+                                    <p class="text-xs text-gray-500">Qty : {{ $item->quantity }}</p>
+                                    <p class="text-sm font-bold text-gray-900">${{ $item->subtotal }}</p>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <hr class="border-gray-100 mb-6">
+
+                        <!-- Totals -->
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between text-gray-600">
+                                <span>Subtotal</span>
+                                <span class="font-bold text-gray-900">${{ $cart->total }}</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Shipping</span>
+                                <span class="font-medium">Free Shipping</span>
+                            </div>
+                            <div class="flex justify-between text-gray-600">
+                                <span>Discount</span>
+                                <span class="font-medium">${{ $summary['discount'] }}</span>
                             </div>
                         </div>
 
-                        <div class="row mt-5">
-                            <div class="col-md-6">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" disabled value="{{ auth()->user()->name }}">
-                                    <label for="name">Full Name</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="phone" required="">
-                                    <label for="phone">Phone Number *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="address" required=""
-                                        value="{{ $address ? $address->address : '' }}">
-                                    <label for="address">Address Line *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="city" required=""
-                                        value="{{ $address ? $address->city : '' }}">
-                                    <label for="city">Town / City *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="zip" required=""
-                                        value="{{ $address ? $address->zip : '' }}">
-                                    <label for="zip">Zipcode *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating my-3">
-                                    <input type="text" class="form-control" name="country" required=""
-                                        value="{{ $address ? $address->country : '' }}">
-                                    <label for="country">Country *</label>
-                                    <span class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <hr class="border-gray-100 my-6">
 
-                    <div class="checkout__totals-wrapper">
-                        <div class="sticky-content">
-                            <div class="checkout__totals">
-                                <h3>Your Order</h3>
-                                <table class="checkout-cart-items">
-                                    <thead>
-                                        <tr>
-                                            <th>PRODUCT</th>
-                                            <th align="right">SUBTOTAL</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($cart->items as $item)
-                                            <tr>
-                                                <td>
-                                                    {{ $item->product->name }} x {{ $item->quantity }}
-                                                </td>
-                                                <td align="right">
-                                                    ${{ $item->subtotal }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <table class="checkout-totals">
-                                    <tbody>
-                                        <tr>
-                                            <th>SUBTOTAL</th>
-                                            <td align="right">${{ $cart->total }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>SHIPPING</th>
-                                            <td align="right">Free shipping</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Discount</th>
-                                            <td align="right">{{ $summary['discount'] }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>TAX / VAT</th>
-                                            <td align="right">N / A</td>
-                                        </tr>
-                                        <tr>
-                                            <th>TOTAL</th>
-                                            <td align="right">${{ $summary['total'] }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="checkout__payment-methods">
-                                <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio" name="method"
-                                        id="checkout_payment_method_1" value="bank">
-                                    <label class="form-check-label" for="checkout_payment_method_1">
-                                        Direct bank transfer
-                                        <p class="option-detail">
-                                            Make your payment directly into our bank account. Please use your Order ID as
-                                            the payment reference.Your order will not be shipped until the funds have
-                                            cleared in our account.
-                                            Account Name: XYZ,
-                                            Account Number: 123456789,
-                                            Bank Name: ABC Bank,
-                                            SWIFT Code: ABCD1234
-                                        </p>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio" name="method"
-                                        id="checkout_payment_method_3" value="cod">
-                                    <label class="form-check-label" for="checkout_payment_method_3">
-                                        Cash on delivery
-                                        <p class="option-detail">
-                                            Recieve your order at home and pay in cash to the courier.
-                                        </p>
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input form-check-input_fill" type="radio" name="method"
-                                        id="checkout_payment_method_4" value="bkash/nagad">
-                                    <label class="form-check-label" for="checkout_payment_method_4">
-                                        Mobile Banking (Bkash/Nagad)
-                                        <p class="option-detail">
-                                            Make your payment via Bkash or Nagad to the following number: 01XXXXXXXXX.
-                                            Please include your Order ID in the payment reference. Your order will be
-                                            processed once the payment is confirmed.
-                                        </p>
-                                    </label>
-                                </div>
-                                <div class="policy-text">
-                                    Your personal data will be used to process your order, support your experience
-                                    throughout this
-                                    website, and for other purposes described in our <a href="terms.html"
-                                        target="_blank">privacy
-                                        policy</a>.
-                                </div>
-                            </div>
-                            <button class="btn btn-primary btn-checkout" type="submit">PLACE ORDER</button>
+                        <div class="flex justify-between items-center text-lg mb-6">
+                            <span class="font-bold text-gray-900">Total</span>
+                            <span class="font-bold text-2xl text-accent">${{ $summary['total'] }}</span>
                         </div>
                     </div>
                 </div>
-            </form>
-        </section>
-    </main>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    <script></script>
+@endpush

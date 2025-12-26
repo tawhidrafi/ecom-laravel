@@ -1,174 +1,187 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="pt-90" style="padding-top: 0px;">
-        <div class="mb-4 pb-4"></div>
-        <section class="my-account container">
-            <h2 class="page-title">Order's Details</h2>
-            <div class="row">
-                <div class="col-lg-2">
-                    <ul class="account-nav">
-                        <li><a href="{{ route('user.dashboard') }}" class="menu-link menu-link_us-s">Dashboard</a></li>
-                        <li><a href="{{ route('user.orders.index') }}"
-                                class="menu-link menu-link_us-s menu-link_active">Orders</a></li>
-                        <li><a href="{{ route('address.index') }}" class="menu-link menu-link_us-s ">Addresses</a></li>
-                        <li><a href="#" class="menu-link menu-link_us-s ">Account
-                                Details</a></li>
-                        <li><a href="{{ route('wishlist.index') }}" class="menu-link menu-link_us-s ">Wishlist</a>
-                        </li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}" id="logout-form-1">
-                                @csrf
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
 
-                                <button type="submit">Log Out</button>
-                            </form>
-                        </li>
-                    </ul>
+        <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-900">Order #{{ $order->id }}</h1>
+                <p class="text-gray-500 text-sm mt-1">Placed on <span id="order-date">{{ $order->created_at }}</span></p>
+            </div>
+            <div class="flex gap-3">
+                <button
+                    class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded text-sm font-medium hover:bg-gray-50 transition shadow-sm">
+                    <i class="fa-solid fa-file-invoice mr-2"></i> Download Invoice
+                </button>
+                <button
+                    class="bg-primary text-white px-4 py-2 rounded text-sm font-medium hover:bg-gray-800 transition shadow-sm">
+                    <i class="fa-solid fa-truck-fast mr-2"></i> Track Package
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 overflow-x-auto">
+            <div class="flex items-center justify-between min-w-[600px] md:min-w-0">
+
+                <div class="flex flex-col items-center relative flex-1">
+                    <div
+                        class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm z-10 border-4 border-white shadow-sm">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="absolute top-5 left-[calc(50%+20px)] w-full h-1 bg-green-500 -z-0"></div>
+                    <div class="mt-3 text-center">
+                        <span class="block text-sm font-bold text-gray-900">Order Placed</span>
+                        <span class="text-xs text-gray-500">{{ $order->created_at }}</span>
+                    </div>
                 </div>
 
-                <div class="col-lg-10">
-                    <div class="wg-box mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-6">
-                                <h5>Ordered Details</h5>
+                <div class="flex flex-col items-center relative flex-1">
+                    <div
+                        class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm z-10 border-4 border-white shadow-sm">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="absolute top-5 left-[calc(50%+20px)] w-full h-1 bg-green-500 -z-0"></div>
+                    <div class="mt-3 text-center">
+                        <span class="block text-sm font-bold text-gray-900">Processing</span>
+                        <span class="text-xs text-gray-500">--</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center relative flex-1">
+                    <div class="absolute top-5 left-[-50%] w-[calc(100%+20px)] h-1 bg-green-500 -z-0"></div>
+                    <div class="absolute top-5 left-[calc(50%+20px)] w-full h-1 bg-gray-200 -z-0"></div>
+                    <div
+                        class="w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center font-bold text-sm z-10 border-4 border-white shadow-sm animate-pulse">
+                        <i class="fa-solid fa-box"></i>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <span class="block text-sm font-bold text-primary">In Transit</span>
+                        <span class="text-xs text-accent font-medium">Current Status</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center relative flex-1">
+                    <div
+                        class="w-10 h-10 bg-white border-2 border-gray-200 text-gray-300 rounded-full flex items-center justify-center font-bold text-sm z-10">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <span class="block text-sm font-medium text-gray-400">Delivered</span>
+                        <span class="text-xs text-gray-400">{{ $order->delivery_date }}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <div class="lg:col-span-2 space-y-8">
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6">Order Items</h2>
+
+                    <div class="space-y-6">
+                        @foreach ($order->orderItems as $item)
+                            <div class="flex gap-4 border-b border-gray-50 pb-6 last:border-0 last:pb-0">
+                                <div class="w-20 h-20 bg-gray-100 rounded border border-gray-200 overflow-hidden flex-shrink-0">
+                                    <img src="{{ asset('assets/upload/product') . '/' . $item->product->image }}" alt="Product"
+                                        class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">{{ $item->product->name }}</h4>
+                                        </div>
+                                        <p class="font-bold text-gray-900">${{ $item->price }}</p>
+                                    </div>
+                                    <div class="flex justify-between items-center mt-2">
+                                        <p class="text-sm text-gray-500">Qty: {{ $item->quantity }}</p>
+                                        <button
+                                            class="text-sm font-medium text-accent hover:underline hover:text-primary transition">Buy
+                                            Again</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6 text-right">
-                                <a class="btn btn-sm btn-danger" href="http://localhost:8000/account-orders">Back</a>
-                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Shipping Information</h2>
+                    <div class="flex items-start gap-4">
+                        <div
+                            class="w-10 h-10 bg-gray-50 rounded-full flex items-center justify-center text-gray-500 flex-shrink-0">
+                            <i class="fa-solid fa-location-dot"></i>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-transaction">
-                                <tbody>
-                                    <tr>
-                                        <th>Order No</th>
-                                        <td>{{ $order->id }}</td>
-                                        <th>Mobile</th>
-                                        <td>{{ $order->phone }}</td>
-                                        <th>Pin/Zip Code</th>
-                                        <td>{{ $order->zip }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="color: black">Order Date</th>
-                                        <td>{{ $order->created_at }}</td>
-                                        <th style="color: black">Delivered Date</th>
-                                        <td>{{ $order->delivery_date ?? 'pending' }}</td>
-                                        <th style="color: black">Canceled Date</th>
-                                        <td>{{ $order->cancelled_date ?? 'Not Canceled' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Order Status</th>
-                                        <td colspan="5">{{ $order->status }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div>
+                            <p class="font-bold text-gray-900">{{ $order->user->name }}</p>
+                            <p class="text-gray-600 text-sm mt-1 leading-relaxed">
+                                {{ $order->address }}<br>
+                                {{ $order->city }}, {{ $order->zip }}<br>
+                                {{ $order->country }}
+                            </p>
+                            <p class="text-gray-600 text-sm mt-2">
+                                <i class="fa-solid fa-phone text-xs mr-1"></i> {{ $order->phone }}
+                            </p>
                         </div>
                     </div>
-                    <div class="wg-box wg-table table-all-user">
-                        <div class="row">
-                            <div class="col-6">
-                                <h5>Ordered Items</h5>
-                            </div>
-                            <div class="col-6 text-right">
-
-                            </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th class="text-center">SKU</th>
-                                        <th class="text-center">Category</th>
-                                        <th class="text-center">Brand</th>
-                                        <th class="text-center">Quantity</th>
-                                        <th class="text-center">Price</th>
-                                        <th class="text-center">Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($order->orderItems as $item)
-                                        <tr>
-                                            <td class="pname">
-                                                <div class="image">
-                                                    <img src="{{ asset('assets/upload/product') . '/' . $item->product->image }}"
-                                                        alt="" class="image"
-                                                        style="width:60px; height:auto; margin-right:10px;">
-                                                </div>
-                                                <div class="name">
-                                                    <a href="{{ route('shop.show', $item->product->slug) }}" target="_blank"
-                                                        class="body-title-2">{{ $item->product->name }}</a>
-                                                </div>
-                                            </td>
-                                            <td class="text-center">{{ $item->product->SKU }}</td>
-                                            <td class="text-center">{{ $item->product->category->name }}</td>
-                                            <td class="text-center">{{ $item->product->brand->name }}</td>
-                                            <td class="text-center">{{ $item->quantity }}</td>
-                                            <td class="text-center">${{ $item->price }}</td>
-                                            <td class="text-center">${{ $item->subtotal }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
-
-                    </div>
-
-                    <div class="wg-box mt-5">
-                        <h5>Shipping Address</h5>
-                        <div class="my-account__address-item col-md-6">
-                            <div class="my-account__address-item__detail">
-                                <p>Address: {{ $order->address }}</p>
-                                <p>City: {{ $order->city }}</p>
-                                <p>State: {{ $order->state ?? 'N/A' }}</p>
-                                <p>Zipcode: {{ $order->zip }}</p>
-                                <p>Country: {{ $order->country }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="wg-box mt-5">
-                        <h5>Transactions</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-transaction">
-                                <tbody>
-                                    <tr>
-                                        <th>Subtotal</th>
-                                        <td>${{ $order->subtotal }}</td>
-                                        <th>Tax</th>
-                                        <td>${{ $order->tax ?? 0 }}</td>
-                                        <th>Discount</th>
-                                        <td>${{ $order->discount ?? 0 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="color: black">Total</th>
-                                        <td>${{ $order->total }}</td>
-                                        <th style="color: black">Payment Mode</th>
-                                        <td>{{ $order->transaction->method }}</td>
-                                        <th style="color: black">Status</th>
-                                        <td>
-                                            {{ $order->transaction->status }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    @if($order->cancelled_date === null && $order->status !== 'shipped' && $order->status !== 'delivered')
-                        <div class="wg-box mt-5 text-right">
-                            <form action="{{ route('user.order.cancel', $order) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="btn btn-danger">Cancel Order</button>
-                            </form>
-                        </div>
-                    @endif
                 </div>
             </div>
-        </section>
-    </main>
+
+            <div class="lg:col-span-1 space-y-8">
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Payment Summary</h2>
+                    <div class="space-y-3 text-sm mb-4">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span>${{ $order->total }}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Shipping</span>
+                            <span>Free Shipping</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Tax</span>
+                            <span>${{ $order->tax }}</span>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-100 my-4"></div>
+                    <div class="flex justify-between items-center text-lg">
+                        <span class="font-bold text-gray-900">Total</span>
+                        <span class="font-bold text-2xl text-primary">${{ $order->total }}</span>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                    <h2 class="text-lg font-bold text-gray-900 mb-4">Payment Method</h2>
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded border border-gray-100">
+                        <i class="fa-brands fa-cc-visa text-2xl text-gray-700"></i>
+                        <div>
+                            <p class="text-sm font-bold text-gray-900">{{ $order->transaction->method }}</p>
+                            <p class="text-xs text-gray-500">Paid on {{ $order->transaction->updated_at }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-accent/10 p-6 rounded-lg border border-accent/20 text-center">
+                    <i class="fa-solid fa-headset text-2xl text-accent mb-2"></i>
+                    <h3 class="font-bold text-gray-900">Need Help?</h3>
+                    <p class="text-sm text-gray-600 mt-1 mb-4">Have questions about this order? Our team is here to
+                        assist.</p>
+                    <a href="#"
+                        class="inline-block bg-white text-accent border border-accent px-4 py-2 rounded text-sm font-bold hover:bg-accent hover:text-white transition">Contact
+                        Support</a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 @endsection
+
+@push('scripts')
+    <script></script>
+@endpush
