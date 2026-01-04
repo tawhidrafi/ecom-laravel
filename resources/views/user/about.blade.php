@@ -1,25 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Hero Section -->
     <section class="relative h-[70vh] flex items-center justify-center bg-gray-900 overflow-hidden">
         <!-- Background Image -->
         <img src="https://picsum.photos/seed/aboutHero/1920/1080" alt="Furniture Workshop"
             class="absolute inset-0 w-full h-full object-cover opacity-60">
 
-        <!-- Content -->
         <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">Designing
-                Spaces,<br>Creating Memories.</h1>
-            <p class="text-xl text-gray-200 font-light max-w-2xl mx-auto">
-                We believe that great design should be accessible to everyone. At Lumina, we craft furniture that
-                blends modern aesthetics with everyday functionality.
+            <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">Coming Soon</h1>
             </p>
         </div>
     </section>
 
     <!-- Our Story -->
-    <section class="py-20 bg-white">
+    {{-- <section class="py-20 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
                 <!-- Image -->
@@ -204,5 +198,5 @@
                     class="bg-accent text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-700 transition">Subscribe</button>
             </form>
         </div>
-    </section>
+    </section> --}}
 @endsection

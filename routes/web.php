@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\User\ContactController;
+use App\Http\Controllers\User\ReviewController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AdminController;
@@ -134,6 +135,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/', [UserController::class, 'update'])->name('user.profile.update');
 });
 
+// review
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])
+    ->middleware('auth')
+    ->name('reviews.store');
 
 // Admin
 Route::prefix('admin')->group(function () {

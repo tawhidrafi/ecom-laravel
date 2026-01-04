@@ -37,6 +37,21 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(\App\Models\User\Review::class);
+    }
+
+    public function averageRating()
+    {
+        return round($this->reviews()->avg('rating'), 1);
+    }
+
+    public function reviewCount()
+    {
+        return $this->reviews()->count();
+    }
+
 
     public function scopeActive($query)
     {

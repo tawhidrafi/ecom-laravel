@@ -23,7 +23,7 @@
                                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                                 <input type="text" id="phone" required name="phone"
                                     class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-accent focus:border-accent py-3 px-4 border transition outline-none"
-                                    placeholder="+1 (555) 123-4567">
+                                    placeholder="+880 1234 567890">
                             </div>
                         </div>
 
@@ -80,12 +80,10 @@
                         <div>
                             <h3 class="font-bold text-gray-900">Visit Us</h3>
                             <p class="text-sm text-gray-600 mt-1">
-                                123 Design Avenue<br>
-                                San Francisco, CA 94102<br>
-                                United States
+                                BGC Bidyanagar<br>
+                                Chandanaish, Chattogram<br>
+                                Bangladesh
                             </p>
-                            <a href="#" class="text-sm text-accent font-medium mt-2 inline-block hover:underline">Get
-                                Directions</a>
                         </div>
                     </div>
 
@@ -97,10 +95,8 @@
                         <div>
                             <h3 class="font-bold text-gray-900">Call Us</h3>
                             <p class="text-sm text-gray-600 mt-1">
-                                Mon-Fri from 8am to 5pm.<br>
-                                <a href="tel:+15550000000" class="font-medium text-gray-900 hover:text-accent transition">+1
-                                    (555)
-                                    000-0000</a>
+                                Saturday - Thursday from 10am to 6pm.<br>
+                            <p class="font-medium text-gray-900 hover:text-accent transition">+880 1234-567891</p>
                             </p>
                         </div>
                     </div>
@@ -114,8 +110,8 @@
                             <h3 class="font-bold text-gray-900">Email Us</h3>
                             <p class="text-sm text-gray-600 mt-1">
                                 We usually respond within 24 hours.<br>
-                                <a href="mailto:hello@lumina.com"
-                                    class="font-medium text-gray-900 hover:text-accent transition">hello@lumina.com</a>
+                                <a href="#"
+                                    class="font-medium text-gray-900 hover:text-accent transition">support@abshop.com</a>
                             </p>
                         </div>
                     </div>
@@ -135,69 +131,7 @@
                                 class="fa-brands fa-pinterest-p"></i></a>
                     </div>
                 </div>
-
-                <!-- Map Placeholder -->
-                <div
-                    class="h-64 w-full bg-gray-200 rounded-xl overflow-hidden relative group cursor-pointer border border-gray-300">
-                    <!-- Using a static map image for demo purposes to avoid API keys -->
-                    <img src="https://picsum.photos/seed/map/600/400?grayscale" alt="Map Location"
-                        class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                        <div class="bg-white p-3 rounded-full shadow-lg mb-2">
-                            <i class="fa-solid fa-map-location-dot text-accent text-2xl"></i>
-                        </div>
-                        <span class="bg-white px-3 py-1 rounded-full text-xs font-bold shadow">View on Google
-                            Maps</span>
-                    </div>
-                </div>
-
             </div>
-
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        function submitForm(event) {
-            event.preventDefault();
-
-            // Simulate form submission
-            const btn = event.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerText;
-
-            btn.innerText = "Sending...";
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
-
-            setTimeout(() => {
-                // Reset Form
-                event.target.reset();
-
-                // Reset Button
-                btn.innerText = originalText;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
-
-                // Show Success Toast
-                showToast("Message sent successfully! We'll get back to you soon.");
-            }, 1500);
-        }
-
-        function showToast(message) {
-            const toastContainer = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-
-            toast.className = `toast flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 border-l-4 border-green-500`;
-            toast.innerHTML = `
-                                                            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
-                                                                <i class="fa-solid fa-check"></i>
-                                                            </div>
-                                                            <div class="ml-3 text-sm font-normal text-gray-800">${message}</div>
-                                                        `;
-            toastContainer.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('hiding');
-                toast.addEventListener('animationend', () => toast.remove());
-            }, 3000);
-        }
-    </script>
-@endpush

@@ -104,10 +104,6 @@
 
                 <!-- Icons (Search, User, Cart) -->
                 <div class="flex items-center space-x-6">
-                    <button class="text-gray-500 hover:text-primary transition hidden sm:block">
-                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
-                    </button>
-
                     <a href="{{ route('user.dashboard') }}"
                         class="text-gray-500 hover:text-primary transition hidden sm:block">
                         <i class="fa-regular fa-user text-lg"></i>
@@ -166,24 +162,24 @@
                         Your one-stop shop for quality products that combines style and comfort. Transform your fashion
                         with our curated collections.
                     </p>
-                    <div class="flex space-x-4 mt-6">
+                    {{-- <div class="flex space-x-4 mt-6">
                         <a href="#" class="text-gray-400 hover:text-white transition"><i
                                 class="fa-brands fa-facebook text-xl"></i></a>
                         <a href="#" class="text-gray-400 hover:text-white transition"><i
                                 class="fa-brands fa-instagram text-xl"></i></a>
                         <a href="#" class="text-gray-400 hover:text-white transition"><i
                                 class="fa-brands fa-twitter text-xl"></i></a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Links -->
                 <div>
                     <h4 class="text-white font-semibold mb-4">Shop</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-accent transition">All Products</a></li>
-                        <li><a href="#" class="hover:text-accent transition">New Arrivals</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Featured</a></li>
-                        <li><a href="#" class="hover:text-accent transition">Sale</a></li>
+                        <li><a href="#" class="hover:text-accent transition">Home</a></li>
+                        <li><a href="#" class="hover:text-accent transition">Shop</a></li>
+                        <li><a href="#" class="hover:text-accent transition">Contact</a></li>
+                        <li><a href="#" class="hover:text-accent transition">About</a></li>
                     </ul>
                 </div>
 
@@ -191,8 +187,6 @@
                 <div>
                     <h4 class="text-white font-semibold mb-4">Support</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="{{ route('contact.index') }}" class="hover:text-accent transition">Contact Us</a>
-                        </li>
                         <li><a href="#" class="hover:text-accent transition">Shipping & Returns</a></li>
                         <li><a href="#" class="hover:text-accent transition">FAQ</a></li>
                         <li><a href="#" class="hover:text-accent transition">Privacy Policy</a></li>
@@ -216,7 +210,7 @@
             <div
                 class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                 <p>&copy; 2024 AB Shop. All rights reserved.</p>
-                <p>Designed for Showcase.</p>
+                <p>Designed by RAFI UDDIN.</p>
             </div>
         </div>
     </footer>

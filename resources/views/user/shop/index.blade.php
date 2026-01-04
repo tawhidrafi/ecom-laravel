@@ -16,7 +16,7 @@
         <div class="flex flex-col lg:flex-row gap-8">
 
             <!-- Sidebar -->
-            <aside id="sidebar"
+            {{-- <aside id="sidebar"
                 class="fixed inset-y-0 left-0 z-30 w-80 bg-white shadow-xl transform -translate-x-full lg:static lg:transform-none lg:block lg:shadow-none lg:w-1/4 lg:bg-transparent sidebar-transition h-full overflow-y-auto">
                 <div class="p-6 lg:p-0 h-full">
 
@@ -90,10 +90,11 @@
                     </div>
 
                 </div>
-            </aside>
+            </aside> --}}
 
             <!-- Product Grid -->
-            <section class="w-full lg:w-3/4">
+            {{-- <section class="w-full lg:w-3/4"> --}}
+            <section class="w-full">
 
                 <!-- Toolbar -->
                 <div
@@ -110,15 +111,17 @@
 
                     <div class="flex items-center gap-4">
                         <div class="relative">
-                            <select
-                                class="appearance-none bg-gray-50 border border-gray-300 text-gray-700 py-2 pl-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-accent text-sm font-medium">
-                                <option>Sort by: Popularity</option>
-                                <option>Newest First</option>
-                                <option>Price: Low to High</option>
-                                <option>Price: High to Low</option>
-                            </select>
+                            <form method="GET" action="{{ route('shop.index') }}">
+                                <select name="sort" onchange="this.form.submit()" class="appearance-none bg-gray-50 border border-gray-300 text-gray-700 py-2 pl-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-accent text-sm font-medium">
+                                    <option value="">Default</option>
+                                    <option value="popular">Popular</option>
+                                    <option value="newest">Newest</option>
+                                    <option value="low_price">Low Price</option>
+                                    <option value="high_price">High Price</option>
+                                </select>
+                            </form>
                             <div
-                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                class="pointer-events-none absolute inset-y-1 right-0 flex items-center px-2 text-gray-700">
                                 <i class="fa-solid fa-chevron-down text-xs"></i>
                             </div>
                         </div>

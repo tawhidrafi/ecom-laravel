@@ -61,6 +61,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(\App\Models\User\Order::class);
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(\App\Models\User\Review::class);
+    }
+
+    public function hasPurchasedProduct($productId)
+    {
+        return $this->orders()
+            ->where('status', 'delivered')
+            ->whereHas('orderItems', function ($q) use ($productId) {
+                $q->where('product_id', $productId);
+            })
+            ->exists();
+    }
+
+    public function hasReviewedProduct($productId)
+    {
+        return $this->reviews()->where('product_id', $productId)->exists();
+    }
+
     public function transactions()
     {
         return $this->hasMany(\App\Models\User\Transaction::class);

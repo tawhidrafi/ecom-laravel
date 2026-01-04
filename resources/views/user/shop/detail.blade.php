@@ -65,14 +65,32 @@
                     </span>
                     <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{{ $product->name }}</h1>
                     <div class="flex items-center space-x-4">
+                        <!-- Stars -->
                         <div class="flex text-yellow-400 text-sm">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star-half-stroke"></i>
+                            @php
+                                $avg = $product->averageRating() ?? 0;
+                                $fullStars = floor($avg);
+                                $hasHalfStar = ($avg - $fullStars) >= 0.5;
+                            @endphp
+
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $fullStars)
+                                    <i class="fa-solid fa-star"></i>
+                                @elseif ($i == $fullStars + 1 && $hasHalfStar)
+                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                @else
+                                    <i class="fa-regular fa-star"></i>
+                                @endif
+                            @endfor
                         </div>
-                        <a href="#tab-content-reviews" class="text-sm text-gray-500 hover:text-primary underline">Read 24
-                            Reviews</a>
+
+                        <!-- Review count link -->
+                        <a href="#tab-content-reviews"
+                        class="text-sm text-gray-500 hover:text-primary underline">
+                            Read {{ $product->reviewCount() }} Reviews
+                        </a>
                     </div>
+
                     <p class="text-3xl font-bold text-gray-900 mt-4">
                         @if($product->sale_price)
                             <s> ${{ $product->price }} </s> ${{ $product->sale_price }}
@@ -166,7 +184,7 @@
                     class="tab-btn border-accent text-accent whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition">Description</button>
                 <button onclick="switchTab('reviews')" id="tab-btn-reviews"
                     class="tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition">Reviews
-                    (24)</button>
+                    ({{ $product->reviewCount() }})</button>
                 <button onclick="switchTab('shipping')" id="tab-btn-shipping"
                     class="tab-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition">Shipping
                     & Returns</button>
@@ -186,77 +204,122 @@
                 <!-- Summary -->
                 <div class="lg:col-span-1">
                     <div class="bg-gray-50 p-6 rounded-lg text-center">
-                        <div class="text-5xl font-bold text-gray-900 mb-2">4.8</div>
+                        <div class="text-5xl font-bold text-gray-900 mb-2">{{ $product->averageRating() }}</div>
                         <div class="flex justify-center text-yellow-400 text-sm mb-2">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star-half-stroke"></i>
+                            @php
+                                $avg = $product->averageRating() ?? 0;
+                                $fullStars = floor($avg);
+                                $hasHalfStar = ($avg - $fullStars) >= 0.5;
+                            @endphp
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <= $fullStars)
+                                    <i class="fa-solid fa-star"></i>
+                                @elseif ($i == $fullStars + 1 && $hasHalfStar)
+                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                @else
+                                    <i class="fa-regular fa-star"></i>
+                                @endif
+                            @endfor
                         </div>
-                        <p class="text-gray-500 text-sm">Based on 24 reviews</p>
+                        <p class="text-gray-500 text-sm">
+                            Based on {{ $product->reviewCount() }} reviews
+                        </p>
                     </div>
                 </div>
 
                 <!-- Review List -->
                 <div class="lg:col-span-2 space-y-6" id="review-list">
-                    <!-- Review 1 -->
-                    <div class="border-b border-gray-100 pb-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-3">
-                                <img src="https://picsum.photos/seed/u1/40/40" alt="Avatar" class="w-10 h-10 rounded-full">
-                                <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Alice Johnson</h4>
-                                    <p class="text-xs text-gray-500">2 days ago</p>
+                    @foreach($product->reviews as $review)
+                        <div class="border-b border-gray-100 pb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($review->user->name) }}"
+                                        class="w-10 h-10 rounded-full">
+                                    <div>
+                                        <h4 class="font-bold text-gray-900 text-sm">
+                                            {{ $review->user->name }}
+                                        </h4>
+                                        <p class="text-xs text-gray-500">
+                                            {{ $review->created_at->diffForHumans() }}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="flex text-yellow-400 text-xs">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                    class="fa-solid fa-star"></i>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 text-sm">Absolutely love this chair! It's even more comfortable than
-                            it looks in the photos. The gray color matches my living room perfectly.</p>
-                    </div>
 
-                    <!-- Review 2 -->
-                    <div class="border-b border-gray-100 pb-6">
-                        <div class="flex items-center justify-between mb-2">
-                            <div class="flex items-center gap-3">
-                                <img src="https://picsum.photos/seed/u2/40/40" alt="Avatar" class="w-10 h-10 rounded-full">
-                                <div>
-                                    <h4 class="font-bold text-gray-900 text-sm">Mark Davey</h4>
-                                    <p class="text-xs text-gray-500">1 week ago</p>
+                                <div class="flex text-yellow-400 text-xs">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="{{ $i <= $review->rating ? 'fa-solid' : 'fa-regular' }} fa-star"></i>
+                                    @endfor
                                 </div>
                             </div>
-                            <div class="flex text-yellow-400 text-xs">
-                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                    class="fa-regular fa-star"></i>
-                            </div>
+
+                            <p class="text-gray-600 text-sm">
+                                {{ $review->comment }}
+                            </p>
                         </div>
-                        <p class="text-gray-600 text-sm">Great quality for the price. Assembly was straightforward.
-                            Only giving 4 stars because delivery took a day longer than expected.</p>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
 
             <!-- Review Form -->
-            <div class="mt-10 max-w-2xl">
-                <h3 class="text-xl font-bold text-gray-900 mb-4">Write a Review</h3>
-                <form onsubmit="submitReview(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Your Name" required
-                            class="w-full border border-gray-300 rounded p-3 focus:ring-accent focus:border-accent outline-none">
-                        <input type="email" placeholder="Your Email" required
-                            class="w-full border border-gray-300 rounded p-3 focus:ring-accent focus:border-accent outline-none">
-                    </div>
-                    <textarea rows="4" placeholder="Your Review" required
-                        class="w-full border border-gray-300 rounded p-3 focus:ring-accent focus:border-accent outline-none"></textarea>
-                    <button type="submit"
-                        class="bg-gray-900 text-white px-6 py-3 rounded font-bold hover:bg-accent transition">Submit
-                        Review</button>
-                </form>
-            </div>
+            @auth
+                @if(auth()->user()->hasPurchasedProduct($product->id))
+                    @if(!auth()->user()->hasReviewedProduct($product->id))
+                        <div class="mt-10 max-w-2xl">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4">
+                                Write a Review
+                            </h3>
+
+                            <form method="POST" action="{{ route('reviews.store', $product) }}" class="space-y-4">
+                                @csrf
+
+                                <!-- Rating -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Rating
+                                    </label>
+                                    <select name="rating" required
+                                        class="w-full border border-gray-300 rounded p-3 focus:ring-accent focus:border-accent outline-none">
+                                        <option value="">Select rating</option>
+                                        @for($i = 5; $i >= 1; $i--)
+                                            <option value="{{ $i }}">{{ $i }} Star{{ $i > 1 ? 's' : '' }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+
+                                <!-- Comment -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Your Review
+                                    </label>
+                                    <textarea name="comment" rows="4" required
+                                        class="w-full border border-gray-300 rounded p-3 focus:ring-accent focus:border-accent outline-none"
+                                        placeholder="Share your experience"></textarea>
+                                </div>
+
+                                <button type="submit"
+                                    class="bg-gray-900 text-white px-6 py-3 rounded font-bold hover:bg-accent transition">
+                                    Submit Review
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <p class="mt-10 text-sm text-gray-500">
+                            You have already reviewed this product. Thank you!
+                        </p>
+                    @endif
+                    @else
+                        <p class="mt-10 text-sm text-gray-500">
+                            You can write a review after purchasing this product.
+                        </p>
+                @endif
+                @else
+                    <p class="mt-10 text-sm text-gray-500">
+                        Please <a href="{{ route('login') }}" class="text-accent font-semibold">login</a>
+                        to write a review.
+                    </p>
+            @endauth
+
         </div>
 
         <!-- Tab Content: Shipping -->

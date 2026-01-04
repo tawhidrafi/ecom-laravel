@@ -29,13 +29,8 @@
             </a>
             <form action="{{ route('logout') }}" method="POST" class="header-tools__item">
               @csrf
-              <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
-                  stroke="currentColor" stroke-width="1">
-                  <path d="M10 17L15 12L10 7" />
-                  <path d="M15 12H3" />
-                  <path d="M15 3H19V21H15" />
-                </svg>
+              <button type="submit" style="background: crimson; color: aliceblue; border: none; padding: 0.5rem; cursor: pointer; margin-left: 1.25rem; margin-top: 1rem;">
+                Logout
               </button>
             </form>
           </nav>
@@ -55,29 +50,25 @@
         <div id="overview" class="tab-content">
           <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Overview</h1>
-            <p class="text-gray-500 text-sm">Welcome back, here's what's happening with your account today.</p>
+            <p class="text-gray-500 text-sm">Welcome back</p>
           </div>
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
               <p class="text-xs text-gray-500 font-semibold uppercase">Total Orders</p>
-              <p class="text-2xl font-bold text-gray-900 mt-1">12</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-              <p class="text-xs text-gray-500 font-semibold uppercase">Wishlist</p>
-              <p class="text-2xl font-bold text-gray-900 mt-1">3</p>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
-              <p class="text-xs text-gray-500 font-semibold uppercase">Loyalty Points</p>
-              <p class="text-2xl font-bold text-accent mt-1">450</p>
+              <p class="text-2xl font-bold text-gray-900 mt-1">{{ auth()->user()->orders->count() }}</p>
             </div>
             <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
               <p class="text-xs text-gray-500 font-semibold uppercase">Shopping amount</p>
-              <p class="text-2xl font-bold text-gray-900 mt-1">$1.2k</p>
+              <p class="text-2xl font-bold text-gray-900 mt-1">{{ auth()->user()->orders->sum('total') }}</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+              <p class="text-xs text-gray-500 font-semibold uppercase">Loyalty Points</p>
+              <p class="text-2xl font-bold text-accent mt-1">Coming Soon</p>
             </div>
           </div>
 
-          <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-8">
+          {{-- <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 mb-8">
             <div class="flex justify-between items-center mb-4">
               <h2 class="text-lg font-bold text-gray-900">Recent Activity</h2>
               <a href="my-orders.html" class="text-sm text-accent hover:underline">View All</a>
@@ -95,7 +86,8 @@
                 class="text-sm font-bold text-white bg-primary hover:bg-gray-800 px-4 py-2 rounded transition">Track
                 Order</a>
             </div>
-          </div>
+          </div> --}}
+
         </div>
       </div>
     </div>

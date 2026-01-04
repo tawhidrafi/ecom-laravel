@@ -31,7 +31,7 @@ class WebController extends Controller
     }
 
     //
-    public function shop()
+    public function shop(Request $request)
     {
         $user = Auth::user();
 
@@ -39,9 +39,35 @@ class WebController extends Controller
 
         $wishList = optional($user)->wishList()?->with(['items', 'items.product'])->first();
 
-        $products = Product::with(['category', 'brand'])->latest()->paginate(10);
+        $sort = $request->query('sort');
 
-        return view('user.shop.index', compact('products', 'cart', 'wishList'));
+        $products = Product::query()
+            ->when($sort === 'popular', function ($q) {
+                $q->leftJoin('order_items', 'products.id', '=', 'order_items.product_id')
+                    ->select('products.*')
+                    ->selectRaw('COALESCE(SUM(order_items.quantity), 0) as total_sold')
+                    ->groupBy('products.id')
+                    ->orderByDesc('total_sold');
+            })
+            ->when(
+                $sort === 'newest',
+                fn($q) =>
+                $q->orderBy('created_at', 'desc')
+            )
+            ->when(
+                $sort === 'low_price',
+                fn($q) =>
+                $q->orderBy('price', 'asc')
+            )
+            ->when(
+                $sort === 'high_price',
+                fn($q) =>
+                $q->orderBy('price', 'desc')
+            )
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('user.shop.index', compact('products', 'sort', 'cart', 'wishList'));
     }
 
     // show
@@ -53,9 +79,13 @@ class WebController extends Controller
 
         $wishList = optional($user)->wishList()?->with(['items', 'items.product'])->first();
 
-        $product = Product::where('slug', $slug)
-            ->with(['category', 'brand'])
-            ->first();
+        $product = Product::where('slug', $slug)->firstOrFail();
+
+        $product->load([
+            'category',
+            'brand',
+            'reviews.user' => fn($q) => $q->select('id', 'name')
+        ]);
 
         return view('user.shop.detail', compact('product', 'cart', 'wishList'));
     }
