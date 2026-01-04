@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 
 use App\Http\Controllers\User\CartController;
-use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\WebController;
 use App\Http\Controllers\User\UserController;
