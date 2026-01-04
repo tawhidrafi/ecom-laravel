@@ -4,69 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin login</title>
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <title>Admin Login</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset("assets/admin/css/animate.min.css") }}" type="text/css" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <main class="pt-90">
-        <section class="login-register container">
-            <ul class="nav nav-tabs mb-4">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#otp-tab">Admin Login</a>
-                </li>
-            </ul>
+<body class="bg-gray-100 font-sans">
 
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="otp-tab">
+    <main class="min-h-screen flex items-center justify-center py-12">
+        <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-center mb-6">Admin Login</h2>
 
-                    <form method="POST" action="{{ route('admin.login.post') }}" class="needs-validation" novalidate>
-                        @csrf
-
-                        @if (session('message'))
-                            <div style="color:green;">
-                                {{ session('message') }}
-                            </div>
-                        @endif
-
-                        @if ($errors->any())
-                            <div style="color:red;">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <div class="form-floating mb-3">
-                            <input class="form-control form-control_gray" type="email" name="email"
-                                value="admin@mail.com" required="" autocomplete="email" autofocus="">
-                            <label for="email">Email address</label>
-                        </div>
-
-                        <div class="pb-3"></div>
-
-                        <div class="form-floating mb-3">
-                            <input id="password" type="password" class="form-control form-control_gray" name="password"
-                                required="" autocomplete="current-password">
-                            <label for="customerPasswodInput">Password</label>
-                        </div>
-
-                        <button class="btn btn-primary w-100 text-uppercase" type="submit">Log In</button>
-                    </form>
+            @if (session('message'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4 text-center">
+                    {{ session('message') }}
                 </div>
-            </div>
-        </section>
+            @endif
+
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('admin.login.post') }}" class="space-y-4">
+                @csrf
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" value="admin@mail.com" required autocomplete="email" autofocus
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" name="password" required autocomplete="current-password"
+                        class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700 transition">
+                    Log In
+                </button>
+            </form>
+        </div>
     </main>
 
 </body>

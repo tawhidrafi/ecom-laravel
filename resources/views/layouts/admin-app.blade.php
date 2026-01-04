@@ -15,8 +15,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/font/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/icon/style.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/admin/images/favicon.ico') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/admin/images/favicon.ico') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/sweetalert.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/css/custom.css') }}">
 
@@ -40,8 +38,7 @@
                 <div class="section-menu-left">
                     <div class="box-logo">
                         <a href="{{ route('admin.dashboard') }}" id="site-logo-inner">
-                            <img class="" id="logo_header" alt="" src="{{ asset('assets/admin/images/logo/logo.png') }}"
-                                data-light="images/logo/logo.png" data-dark="images/logo/logo.png">
+                            AB SHOP
                         </a>
                         <div class="button-show-hide">
                             <i class="icon-menu-left"></i>
@@ -124,37 +121,20 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="sub-menu-item">
-                                            <a href="orders.html" class="">
+                                            <a href="{{ route('admin.orders.index') }}" class="">
                                                 <div class="text">Orders</div>
-                                            </a>
-                                        </li>
-                                        <li class="sub-menu-item">
-                                            <a href="order-tracking.html" class="">
-                                                <div class="text">Order tracking</div>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="slider.html" class="">
-                                        <div class="icon"><i class="icon-image"></i></div>
-                                        <div class="text">Slider</div>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="coupons.html" class="">
+                                    <a href="{{ route('coupons.index') }}" class="">
                                         <div class="icon"><i class="icon-grid"></i></div>
                                         <div class="text">Coupns</div>
                                     </a>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="users.html" class="">
-                                        <div class="icon"><i class="icon-user"></i></div>
-                                        <div class="text">User</div>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="settings.html" class="">
+                                    <a href="#" class="">
                                         <div class="icon"><i class="icon-settings"></i></div>
                                         <div class="text">Settings</div>
                                     </a>
@@ -319,7 +299,7 @@
                             </div>
 
                             <div class="header-grid">
-                                <div class="popup-wrap message type-header">
+                                {{-- <div class="popup-wrap message type-header">
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
                                             id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -384,7 +364,7 @@
                                             <li><a href="#" class="tf-button w-full">View all</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="popup-wrap user type-header">
                                     <div class="dropdown">
@@ -399,7 +379,6 @@
                                                     <span
                                                         class="body-title mb-2">{{ Auth::guard('admin')->user()->name }}
                                                     </span>
-                                                    <span class="text-tiny">Admin</span>
                                                 </span>
                                             </span>
                                         </button>
@@ -462,7 +441,7 @@
                         @yield('content')
 
                         <div class="bottom-page">
-                            <div class="body-text">Copyright © 2024 SurfsideMedia</div>
+                            <div class="body-text">Copyright © 2024 ABSHOP</div>
                         </div>
                     </div>
                 </div>
