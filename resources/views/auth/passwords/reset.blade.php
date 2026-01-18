@@ -1,72 +1,93 @@
-</html>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- Tailwind CDN (use Vite in production) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fonts -->
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset("assets/front/css/custom.css") }}" type="text/css" />
+    <style>
+        body {
+            font-family: 'Jost', sans-serif;
+        }
+    </style>
 </head>
 
-<body>
-    <main class="pt-90">
-        <section class="login-register container">
-            <ul class="nav nav-tabs mb-4">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#otp-tab">Set New Password</a>
-                </li>
-            </ul>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="otp-tab">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
 
-                    @if ($errors->any())
-                        <div style="color:red;">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+        <!-- Title -->
+        <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">
+            Set New Password
+        </h2>
 
-                    <form method="POST" action="{{ route('password.update') }}" class=" needs-validation" novalidate>
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-                        <input type="email" name="email" value="{{ $email ?? old('email') }}" placeholder="Email"
-                            required hidden>
-
-                        <div class="form-floating mb-3">
-                            <input id="password" type="password" class="form-control form-control_gray " name="password"
-                                required="" autocomplete="new-password">
-                            <label for="password">Password</label>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input id="password-confirm" type="password" class="form-control form-control_gray"
-                                name="password_confirmation" required="" autocomplete="new-password">
-                            <label for="password">Confirm Password</label>
-                        </div>
-
-                        <button class="btn btn-primary w-100 text-uppercase" type="submit">Reset</button>
-                    </form>
-                </div>
+        <!-- Error Messages -->
+        @if ($errors->any())
+            <div class="mb-4 rounded-lg bg-red-50 border border-red-200 p-4">
+                <ul class="text-sm text-red-600 space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-        </section>
-    </main>
+        @endif
+
+        <!-- Form -->
+        <form method="POST" action="{{ route('password.update') }}" class="space-y-5">
+            @csrf
+
+            <input type="hidden" name="token" value="{{ $token }}">
+            <input type="hidden" name="email" value="{{ $email ?? old('email') }}">
+
+            <!-- Password -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                    New Password
+                </label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                    autocomplete="new-password"
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-800
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
+
+            <!-- Confirm Password -->
+            <div>
+                <label for="password-confirm" class="block text-sm font-medium text-gray-700 mb-1">
+                    Confirm Password
+                </label>
+                <input
+                    id="password-confirm"
+                    type="password"
+                    name="password_confirmation"
+                    required
+                    autocomplete="new-password"
+                    class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-gray-800
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+            </div>
+
+            <!-- Submit Button -->
+            <button
+                type="submit"
+                class="w-full rounded-lg bg-blue-600 py-2.5 text-white font-semibold
+                       hover:bg-blue-700 transition duration-200"
+            >
+                Reset Password
+            </button>
+        </form>
+
+    </div>
 
 </body>
-
 </html>

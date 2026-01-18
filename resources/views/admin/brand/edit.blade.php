@@ -1,120 +1,106 @@
 @extends('layouts.admin-app')
 
 @section('content')
-    <div class="main-content-inner">
-        <div class="main-content-wrap">
-            <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-                <h3>Brand infomation</h3>
-                <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}" class="text-tiny">
-                            <div class="text-tiny">Dashboard</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <a href="{{ route('brands.index') }}" class="text-tiny">
-                            <div class="text-tiny">Brands</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <div class="text-tiny">New Brand</div>
-                    </li>
-                </ul>
+    <div class="p-6">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Edit Brand</h2>
+                <p class="text-sm text-gray-500">Update brand information and logo</p>
             </div>
-            <!-- new-category -->
-            <div class="wg-box">
-                <form class="form-new-product form-style-1" action="{{ route('brands.update', $brand) }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-
-                    <fieldset class="name">
-                        <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Brand name" name="name" tabindex="0"
-                            value="{{ old('name', $brand->name) }}" aria-required="true" required="">
-                    </fieldset>
-                    @error('name')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <fieldset class="name">
-                        <div class="body-title">Brand Slug <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Brand Slug" name="slug" tabindex="0"
-                            value="{{ old('slug', $brand->slug) }}" aria-required="true" required="">
-                    </fieldset>
-                    @error('slug')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <fieldset>
-                        <div class="body-title">Upload images <span class="tf-color-1">*</span>
-                        </div>
-                        <div class="upload-image flex-grow">
-                            @if ($brand->image)
-                                <div class="item" id="imgpreview">
-                                    <img src="{{ asset('assets/upload/brand') . '/' . $brand->image }}" class="effect8" alt="">
-                                </div>
-                            @endif
-                            <div id="upload-file" class="item up-load">
-                                <label class="uploadfile" for="myFile">
-                                    <span class="icon">
-                                        <i class="icon-upload-cloud"></i>
-                                    </span>
-                                    <span class="body-text">Drop your images here or select <span class="tf-color">click to
-                                            browse</span></span>
-                                    <input type="file" id="myFile" name="image" accept="image/*">
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    @error('image')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <div class="bot">
-                        <div></div>
-                        <button class="tf-button w208" type="submit">Save</button>
-                    </div>
-                </form>
-            </div>
+            <a href="{{ route('brands.index') }}" class="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg">
+                ← Back
+            </a>
         </div>
+
+        <!-- Card -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <form action="{{ route('brands.update', $brand) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Left -->
+                    <div class="md:col-span-2 space-y-5">
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Brand Name
+                            </label>
+                            <input type="text" name="name" value="{{ old('name', $brand->name) }}"
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            @error('name')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Brand Slug
+                            </label>
+                            <input type="text" name="slug" value="{{ old('slug', $brand->slug) }}"
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            @error('slug')
+                                <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <!-- Right -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Brand Logo
+                        </label>
+
+                        <div class="border-2 border-dashed rounded-xl p-4 text-center">
+
+                            <img id="preview" src="{{ $brand->image
+        ? asset('assets/upload/brand/' . $brand->image)
+        : 'https://via.placeholder.com/300x200?text=No+Image' }}" class="mx-auto mb-3 max-h-40 object-contain rounded">
+
+                            <label
+                                class="inline-block cursor-pointer px-4 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                                Change Image
+                                <input type="file" name="image" id="imageInput" class="hidden">
+                            </label>
+
+                            @error('image')
+                                <p class="text-sm text-red-500 mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-end gap-3 mt-8">
+                    <a href="{{ route('brands.index') }}"
+                        class="px-5 py-2 text-sm bg-gray-100 rounded-lg hover:bg-gray-200">
+                        Cancel
+                    </a>
+                    <button class="px-6 py-2 text-sm text-white bg-blue-600 rounded-lg hover:bg-blue-700">
+                        Update Brand
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
     </div>
 @endsection
 
 @push('scripts')
     <script>
-        $(function () {
-            $("#myFile").on("change", function () {
-                const file = this.files[0];
+        document.getElementById('imageInput').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
 
-                if (file) {
-                    const img = $("#imgpreview img");
-                    img.attr("src", URL.createObjectURL(file));
-                    $("#imgpreview").show();
-                }
-            });
-
-            $("input[name='name']").change(function () {
-                $("input[name='slug']").val(stringToSlug($(this).val()));
-            })
+            const preview = document.getElementById('preview');
+            preview.src = URL.createObjectURL(file);
         });
-
-        function stringToSlug(str) {
-            return str.toLowerCase()
-                .replace(/[^\w ]+/g, '')
-                .replace(/ +/g, '-');
-        }
     </script>
+
 @endpush

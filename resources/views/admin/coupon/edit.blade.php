@@ -1,93 +1,101 @@
 @extends('layouts.admin-app')
 
 @section('content')
-    <div class="main-content-inner">
-        <div class="main-content-wrap">
-            <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-                <h3>Coupon infomation</h3>
-                <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}">
-                            <div class="text-tiny">Dashboard</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <a href="{{ route('coupons.index') }}">
-                            <div class="text-tiny">Coupons</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <div class="text-tiny">Edit Coupon</div>
-                    </li>
-                </ul>
-            </div>
-            <div class="wg-box">
-                <form class="form-new-product form-style-1" method="POST" action="{{ route('coupons.update', $coupon) }}">
-                    @csrf
-                    @method('PUT')
+    <div class="p-6 max-w-3xl mx-auto">
 
-                    <div class="alert alert-danger">
-                        <ul>
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-800">Edit Coupon</h2>
+                <p class="text-sm text-gray-500">Update the details of your coupon</p>
+            </div>
+            <a href="{{ route('coupons.index') }}"
+                class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg text-sm hover:bg-gray-300">
+                ← Back to Coupons
+            </a>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-xl shadow p-6">
+            <form method="POST" action="{{ route('coupons.update', $coupon) }}" class="space-y-4">
+                @csrf
+                @method('PUT')
+
+                <!-- Error Messages -->
+                @if ($errors->any())
+                    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                        <ul class="list-disc pl-5 space-y-1">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
                     </div>
+                @endif
 
-                    <fieldset class="name">
-                        <div class="body-title">Coupon Name <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Coupon Name" name="name"
-                            value="{{ old('name', $coupon->name) }}" aria-required="true" required>
-                    </fieldset>
+                <!-- Coupon Name -->
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Coupon Name <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="name" value="{{ old('name', $coupon->name) }}"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Coupon Name" required>
+                </div>
 
-                    <fieldset class="name">
-                        <div class="body-title">Coupon Code <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Coupon Code" name="code" tabindex="0"
-                            value="{{ old('code', $coupon->code) }}" aria-required="true" required>
-                    </fieldset>
+                <!-- Coupon Code -->
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Coupon Code <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="code" value="{{ old('code', $coupon->code) }}"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Coupon Code" required>
+                </div>
 
-                    <fieldset class="category">
-                        <div class="body-title">Coupon Type</div>
-                        <div class="select flex-grow">
-                            <select class="" name="type">
-                                <option value="">Select</option>
-                                <option value="fixed" {{ $coupon->type == 'fixed' ? 'selected' : '' }}>Fixed</option>
-                                <option value="percentage" {{ $coupon->type == 'percentage' ? 'selected' : '' }}>Percent
-                                </option>
-                            </select>
-                        </div>
-                    </fieldset>
+                <!-- Coupon Type -->
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Coupon Type</label>
+                    <select name="type"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="">Select</option>
+                        <option value="fixed" {{ old('type', $coupon->type) == 'fixed' ? 'selected' : '' }}>Fixed</option>
+                        <option value="percentage" {{ old('type', $coupon->type) == 'percentage' ? 'selected' : '' }}>Percent
+                        </option>
+                    </select>
+                </div>
 
-                    <fieldset class="name">
-                        <div class="body-title">Amount <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Coupon Amount" name="amount" tabindex="0"
-                            value="{{ old('amount', $coupon->amount) }}" aria-required="true" required>
-                    </fieldset>
+                <!-- Amount -->
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Amount <span class="text-red-500">*</span></label>
+                    <input type="number" name="amount" value="{{ old('amount', $coupon->amount) }}" step="0.01"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Coupon Amount" required>
+                </div>
 
-                    <fieldset class="name">
-                        <div class="body-title">Minimum Purchase <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Cart Value" name="min_purchase" tabindex="0"
-                            value="{{ old('min_purchase', $coupon->min_purchase) }}" aria-required="true" required>
-                    </fieldset>
+                <!-- Minimum Purchase -->
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Minimum Purchase <span
+                            class="text-red-500">*</span></label>
+                    <input type="number" name="min_purchase" value="{{ old('min_purchase', $coupon->min_purchase) }}"
+                        step="0.01"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder="Cart Value" required>
+                </div>
 
-                    <fieldset class="name">
-                        <div class="body-title">Expiry Date <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="date" placeholder="Expiry Date" name="expiry_date" tabindex="0"
-                            value="{{ old('expiry_date', $coupon->expiry_date) }}" aria-required="true" required>
-                    </fieldset>
+                <!-- Expiry Date -->
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Expiry Date <span
+                            class="text-red-500">*</span></label>
+                    <input type="date" name="expiry_date" value="{{ old('expiry_date', $coupon->expiry_date) }}"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        required>
+                </div>
 
-                    <div class="bot">
-                        <div></div>
-                        <button class="tf-button w208" type="submit">Save</button>
-                    </div>
-                </form>
-            </div>
+                <!-- Submit -->
+                <div class="flex justify-end">
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

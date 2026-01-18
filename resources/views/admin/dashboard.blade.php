@@ -1,188 +1,156 @@
 @extends('layouts.admin-app')
 
 @section('content')
-    <div class="main-content-inner">
-        <div class="main-content-wrap">
-            <div class="tf-section mb-30">
-                <div class="flex gap20 flex-wrap-mobile">
-                    <div class="w-half">
-                        <div class="wg-chart-default mb-20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-shopping-bag"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Total Orders</div>
-                                        <h4>{{ $totalOrders }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="wg-chart-default mb-20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-dollar-sign"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Total Amount</div>
-                                        <h4>${{ $totalAmount }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <div class="space-y-8">
 
-                        <div class="wg-chart-default mb-20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-shopping-bag"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Pending Orders</div>
-                                        <h4>{{ $pendingOrders }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Stats -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
-                        <div class="wg-chart-default">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-dollar-sign"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Pending Orders Amount</div>
-                                        <h4>${{ $pendingAmount }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-half">
-                        <div class="wg-chart-default mb-20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-shopping-bag"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Delivered Orders</div>
-                                        <h4>{{ $deliveredOrders }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="wg-chart-default mb-20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-dollar-sign"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Delivered Orders Amount</div>
-                                        <h4>${{ $deliveredAmount }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="wg-chart-default mb-20">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-shopping-bag"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Canceled Orders</div>
-                                        <h4>{{ $canceledOrders }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="wg-chart-default">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap14">
-                                    <div class="image ic-bg">
-                                        <i class="icon-dollar-sign"></i>
-                                    </div>
-                                    <div>
-                                        <div class="body-text mb-2">Canceled Orders Amount</div>
-                                        <h4>${{ $canceledAmount }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Card -->
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                    <span class="text-blue-600">🛒</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Total Orders</p>
+                    <p class="text-2xl font-semibold">{{ $totalOrders }}</p>
                 </div>
             </div>
 
-            <div class="tf-section mb-30">
-                <div class="wg-box">
-                    <div class="flex items-center justify-between">
-                        <h5>Recent orders</h5>
-                        <div class="dropdown default">
-                            <a class="btn btn-secondary dropdown-toggle" href="#">
-                                <span class="view-all">View all</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="wg-table table-all-user">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width:70px">OrderNo</th>
-                                        <th class="text-center">Name</th>
-                                        <th class="text-center">Phone</th>
-                                        <th class="text-center">Subtotal</th>
-                                        <th class="text-center">Tax</th>
-                                        <th class="text-center">Total</th>
-
-                                        <th class="text-center">Status</th>
-                                        <th class="text-center">Order Date</th>
-                                        <th class="text-center">Total Items</th>
-                                        <th class="text-center">Delivered On</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($orders as $order)
-                                        <tr>
-                                            <td class="text-center">{{ $order->id }}</td>
-                                            <td class="text-center">{{ $order->user->name }}</td>
-                                            <td class="text-center">{{ $order->phone }}</td>
-                                            <td class="text-center">{{ $order->subtotal }}</td>
-                                            <td class="text-center">{{ $order->tax }}</td>
-                                            <td class="text-center">{{ $order->total }}</td>
-
-                                            <td class="text-center">{{ $order->status }}</td>
-                                            <td class="text-center">{{ $order->created_at }}</td>
-                                            <td class="text-center">{{ $order->orderItems->count() }}</td>
-                                            <td class="text-center">{{ $order->delivery_date ?? 'Pending' }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ route('admin.orders.show', $order->id) }}">
-                                                    <div class="list-icon-function view-icon">
-                                                        <div class="item eye">
-                                                            <i class="icon-eye"></i>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <span class="text-green-600">$</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Total Amount</p>
+                    <p class="text-2xl font-semibold">${{ $totalAmount }}</p>
                 </div>
             </div>
+
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                    <span class="text-yellow-600">⏳</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Pending Orders</p>
+                    <p class="text-2xl font-semibold">{{ $pendingOrders }}</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                    <span class="text-yellow-600">$</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Pending Amount</p>
+                    <p class="text-2xl font-semibold">${{ $pendingAmount }}</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <span class="text-green-600">✅</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Delivered Orders</p>
+                    <p class="text-2xl font-semibold">{{ $deliveredOrders }}</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                    <span class="text-green-600">$</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Delivered Amount</p>
+                    <p class="text-2xl font-semibold">${{ $deliveredAmount }}</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                    <span class="text-red-600">✖</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Canceled Orders</p>
+                    <p class="text-2xl font-semibold">{{ $canceledOrders }}</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                    <span class="text-red-600">$</span>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500">Canceled Amount</p>
+                    <p class="text-2xl font-semibold">${{ $canceledAmount }}</p>
+                </div>
+            </div>
+
         </div>
+
+        <!-- Recent Orders -->
+        <div class="bg-white rounded-lg shadow">
+
+            <div class="flex items-center justify-between px-6 py-4 border-b">
+                <h2 class="text-lg font-semibold">Recent Orders</h2>
+                <a href="{{ route('admin.orders.index') }}" class="text-sm text-blue-600 hover:underline">
+                    View all
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm">
+                    <thead class="bg-gray-50 text-gray-600">
+                        <tr>
+                            <th class="px-4 py-3 text-left">Order</th>
+                            <th class="px-4 py-3 text-left">Customer</th>
+                            <th class="px-4 py-3 text-left">Phone</th>
+                            <th class="px-4 py-3 text-right">Total</th>
+                            <th class="px-4 py-3 text-center">Status</th>
+                            <th class="px-4 py-3 text-center">Date</th>
+                            <th class="px-4 py-3 text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y">
+
+                        @foreach ($orders as $order)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3">#{{ $order->id }}</td>
+                                <td class="px-4 py-3">{{ $order->user->name }}</td>
+                                <td class="px-4 py-3">{{ $order->phone }}</td>
+                                <td class="px-4 py-3 text-right">${{ $order->total }}</td>
+
+                                <td class="px-4 py-3 text-center">
+                                    <span class="px-2 py-1 rounded text-xs font-medium
+                                            @if($order->status === 'pending') bg-yellow-100 text-yellow-700
+                                            @elseif($order->status === 'delivered') bg-green-100 text-green-700
+                                            @else bg-red-100 text-red-700
+                                            @endif">
+                                        {{ ucfirst($order->status) }}
+                                    </span>
+                                </td>
+
+                                <td class="px-4 py-3 text-center">
+                                    {{ $order->created_at->format('d M Y') }}
+                                </td>
+
+                                <td class="px-4 py-3 text-center">
+                                    <a href="{{ route('admin.orders.show', $order->id) }}"
+                                        class="text-blue-600 hover:underline">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
     </div>
+
 @endsection

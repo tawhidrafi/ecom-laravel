@@ -1,117 +1,142 @@
 @extends('layouts.admin-app')
 
 @section('content')
-    <div class="main-content-inner">
-        <div class="main-content-wrap">
-            <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-                <h3>Brand infomation</h3>
-                <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}" class="text-tiny">
-                            <div class="text-tiny">Dashboard</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <a href="{{ route('brands.index') }}" class="text-tiny">
-                            <div class="text-tiny">Brands</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <div class="text-tiny">New Brand</div>
-                    </li>
-                </ul>
-            </div>
-            <!-- new-category -->
-            <div class="wg-box">
-                <form class="form-new-product form-style-1" action="{{ route('brands.store') }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
 
-                    <fieldset class="name">
-                        <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Brand name" name="name" tabindex="0"
-                            value="{{ old('name') }}" aria-required="true" required="">
-                    </fieldset>
-                    @error('name')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+    <div class="space-y-6 max-w-3xl">
 
-                    <fieldset class="name">
-                        <div class="body-title">Brand Slug <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Brand Slug" name="slug" tabindex="0"
-                            value="{{ old('slug') }}" aria-required="true" required="">
-                    </fieldset>
-                    @error('slug')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+        <!-- Page header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h1 class="text-2xl font-semibold">New Brand</h1>
 
-                    <fieldset>
-                        <div class="body-title">Upload images <span class="tf-color-1">*</span>
-                        </div>
-                        <div class="upload-image flex-grow">
-                            <div class="item" id="imgpreview" style="display:none">
-                                <img src="" class="effect8" alt="">
-                            </div>
-                            <div id="upload-file" class="item up-load">
-                                <label class="uploadfile" for="myFile">
-                                    <span class="icon">
-                                        <i class="icon-upload-cloud"></i>
-                                    </span>
-                                    <span class="body-text">Drop your images here or select <span class="tf-color">click to
-                                            browse</span></span>
-                                    <input type="file" id="myFile" name="image" accept="image/*">
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    @error('image')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <div class="bot">
-                        <div></div>
-                        <button class="tf-button w208" type="submit">Save</button>
-                    </div>
-                </form>
-            </div>
+            <nav class="text-sm text-gray-500">
+                <a href="{{ route('admin.dashboard') }}" class="hover:text-gray-700">
+                    Dashboard
+                </a>
+                <span class="mx-2">/</span>
+                <a href="{{ route('brands.index') }}" class="hover:text-gray-700">
+                    Brands
+                </a>
+                <span class="mx-2">/</span>
+                <span class="text-gray-700">New</span>
+            </nav>
         </div>
+
+        <!-- Form -->
+        <div class="bg-white rounded-lg shadow p-6">
+
+            <form method="POST" action="{{ route('brands.store') }}" enctype="multipart/form-data" class="space-y-6">
+
+                @csrf
+
+                <!-- Brand Name -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">
+                        Brand Name <span class="text-red-500">*</span>
+                    </label>
+
+                    <input type="text" name="name" value="{{ old('name') }}" required
+                        class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+                        data-slug-source>
+
+                    @error('name')
+                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Brand Slug -->
+                <div>
+                    <label class="block text-sm font-medium mb-1">
+                        Brand Slug <span class="text-red-500">*</span>
+                    </label>
+
+                    <input type="text" name="slug" value="{{ old('slug') }}" required
+                        class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
+                        data-slug-target>
+
+                    @error('slug')
+                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Image Upload -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Brand Image <span class="text-red-500">*</span>
+                    </label>
+
+                    <div class="flex items-center gap-4">
+                        <div id="imagePreview" class="hidden w-24 h-24 border rounded-md overflow-hidden">
+                            <img class="w-full h-full object-cover" />
+                        </div>
+
+                        <label
+                            class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200">
+                            <span>Upload Image</span>
+                            <input type="file" name="image" accept="image/*" class="hidden" data-image-input>
+                        </label>
+                    </div>
+
+                    @error('image')
+                        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-end gap-3">
+                    <a href="{{ route('brands.index') }}" class="px-4 py-2 border rounded-md hover:bg-gray-100">
+                        Cancel
+                    </a>
+
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                        Save Brand
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
+
 @endsection
 
 @push('scripts')
     <script>
-        $(function () {
-            $("#myFile").on("change", function () {
-                const file = this.files[0];
+        document.addEventListener('DOMContentLoaded', () => {
 
-                if (file) {
-                    const img = $("#imgpreview img");
-                    img.attr("src", URL.createObjectURL(file));
-                    $("#imgpreview").show();
-                }
-            });
+            // Slug generation
+            const nameInput = document.querySelector('[data-slug-source]');
+            const slugInput = document.querySelector('[data-slug-target]');
 
-            $("input[name='name']").change(function () {
-                $("input[name='slug']").val(stringToSlug($(this).val()));
-            })
+            if (nameInput && slugInput) {
+                nameInput.addEventListener('input', () => {
+                    slugInput.value = slugify(nameInput.value);
+                });
+            }
+
+            // Image preview
+            const imageInput = document.querySelector('[data-image-input]');
+            const previewWrapper = document.getElementById('imagePreview');
+            const previewImage = previewWrapper?.querySelector('img');
+
+            if (imageInput) {
+                imageInput.addEventListener('change', () => {
+                    const file = imageInput.files[0];
+                    if (!file) return;
+
+                    previewImage.src = URL.createObjectURL(file);
+                    previewWrapper.classList.remove('hidden');
+                });
+            }
+
         });
 
-        function stringToSlug(str) {
-            return str.toLowerCase()
-                .replace(/[^\w ]+/g, '')
-                .replace(/ +/g, '-');
+        function slugify(text) {
+            return text
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/\s+/g, '-');
         }
     </script>
 @endpush

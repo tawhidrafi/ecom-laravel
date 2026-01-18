@@ -6,54 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP</title>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <!-- Tailwind CDN (use Vite in production) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Fonts -->
+    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset("assets/front/css/style.css") }}" type="text/css" />
-    <link rel="stylesheet" href="{{ asset("assets/front/css/custom.css") }}" type="text/css" />
+    <style>
+        body {
+            font-family: 'Jost', sans-serif;
+        }
+    </style>
 </head>
 
-<body>
-    <main class="pt-90">
-        <section class="login-register container">
-            <ul class="nav nav-tabs mb-4">
-                <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#otp-tab">Verify your OTP</a>
-                </li>
-            </ul>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="otp-tab">
+    <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-center">
 
-                    <form method="POST" action="{{ route('otp.verify') }}" class="needs-validation" novalidate>
-                        @csrf
+        <!-- Title -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">
+            Verify Your OTP
+        </h2>
 
-                        <div class="form-floating mb-3">
-                            <input id="otp" type="text" class="form-control form-control_gray" name="otp" required>
-                            <label for="otp">OTP</label>
-                        </div>
+        <!-- OTP Form -->
+        <form method="POST" action="{{ route('otp.verify') }}" class="space-y-6">
+            @csrf
 
-                        <button class="btn btn-primary w-100 text-uppercase" type="submit">Submit</button>
-                    </form>
-
-                    <div class="pb-3"></div>
-
-                    <div class="customer-option mt-4 text-center">
-                        <span class="text-secondary">Didn't receive OTP?</span>
-                        <form method="POST" action="{{ route('otp.resend') }}">
-                            @csrf
-                            <button>Resend OTP</button>
-                        </form>
-                    </div>
-
-                </div>
+            <!-- OTP Input -->
+            <div>
+                <label for="otp" class="block text-sm font-medium text-gray-700 mb-2 text-left">
+                    One-Time Password
+                </label>
+                <input id="otp" type="text" name="otp" required inputmode="numeric" autocomplete="one-time-code"
+                    placeholder="Enter 6-digit OTP" class="w-full text-center tracking-widest text-lg rounded-lg border border-gray-300 px-4 py-3
+                           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
             </div>
-        </section>
-    </main>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full rounded-lg bg-blue-600 py-2.5 text-white font-semibold
+                       hover:bg-blue-700 transition duration-200">
+                Submit
+            </button>
+        </form>
+
+        <!-- Resend OTP -->
+        <div class="mt-6 text-sm text-gray-600">
+            <span>Didn't receive the OTP?</span>
+            <form method="POST" action="{{ route('otp.resend') }}" class="inline">
+                @csrf
+                <button type="submit" class="ml-1 text-blue-600 font-medium hover:underline">
+                    Resend OTP
+                </button>
+            </form>
+        </div>
+
+    </div>
 
 </body>
 

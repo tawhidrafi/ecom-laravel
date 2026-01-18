@@ -1,293 +1,186 @@
 @extends('layouts.admin-app')
 
 @section('content')
-    <div class="main-content-inner">
-        <!-- main-content-wrap -->
-        <div class="main-content-wrap">
-            <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-                <h3>Add Product</h3>
-                <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}">
-                            <div class="text-tiny">Dashboard</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <a href="{{ route('products.index') }}">
-                            <div class="text-tiny">Products</div>
-                        </a>
-                    </li>
-                    <li>
-                        <i class="icon-chevron-right"></i>
-                    </li>
-                    <li>
-                        <div class="text-tiny">Add product</div>
-                    </li>
-                </ul>
-            </div>
-            <!-- form-add-product -->
-            <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data"
-                action="{{ route('products.store') }}">
-                @csrf
+    <div class="p-6 max-w-full mx-auto space-y-6">
 
-                <div class="wg-box">
-                    <fieldset class="name">
-                        <div class="body-title mb-10">Product name <span class="tf-color-1">*</span>
-                        </div>
-                        <input class="mb-10" type="text" placeholder="Enter product name" name="name" tabindex="0"
-                            value="{{ old('name') }}" aria-required="true" required="">
-                        <div class="text-tiny">Do not exceed 100 characters when entering the product name.</div>
-                    </fieldset>
-                    @error('name')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <fieldset class="name">
-                        <div class="body-title mb-10">Slug <span class="tf-color-1">*</span></div>
-                        <input class="mb-10" type="text" placeholder="Enter product slug" name="slug" tabindex="0"
-                            value="{{ old('slug') }}" aria-required="true" required="">
-                        <div class="text-tiny">Do not exceed 100 characters when entering the product name.</div>
-                    </fieldset>
-                    @error('slug')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <div class="gap22 cols">
-                        <fieldset class="category">
-                            <div class="body-title mb-10">Category <span class="tf-color-1">*</span>
-                            </div>
-                            <div class="select">
-                                <select class="" name="category_id">
-                                    <option>Choose category</option>
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </fieldset>
-                        <fieldset class="brand">
-                            <div class="body-title mb-10">Brand <span class="tf-color-1">*</span>
-                            </div>
-                            <div class="select">
-                                <select class="" name="brand_id">
-                                    <option>Choose Brand</option>
-                                    @foreach ($brands as $brand)
-                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <fieldset class="shortdescription">
-                        <div class="body-title mb-10">Short Description <span class="tf-color-1">*</span></div>
-                        <textarea class="mb-10 ht-150" name="short_description" placeholder="Short Description"
-                            value="{{ old('short_description') }}" tabindex="0" aria-required="true" required=""></textarea>
-                        <div class="text-tiny">Do not exceed 100 characters when entering the product name.</div>
-                    </fieldset>
-                    @error('short_description')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <fieldset class="description">
-                        <div class="body-title mb-10">Description <span class="tf-color-1">*</span>
-                        </div>
-                        <textarea class="mb-10" name="description" placeholder="Description"
-                            value="{{ old('description') }}" tabindex="0" aria-required="true" required=""></textarea>
-                        <div class="text-tiny">Do not exceed 100 characters when entering the product name.</div>
-                    </fieldset>
-                    @error('description')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="wg-box">
-                    <fieldset>
-                        <div class="body-title">Upload images <span class="tf-color-1">*</span>
-                        </div>
-                        <div class="upload-image flex-grow">
-                            <div class="item" id="imgpreview" style="display:none">
-                                <img src="" class="effect8" alt="">
-                            </div>
-                            <div id="upload-file" class="item up-load">
-                                <label class="uploadfile" for="myFile">
-                                    <span class="icon">
-                                        <i class="icon-upload-cloud"></i>
-                                    </span>
-                                    <span class="body-text">Drop your images here or select <span class="tf-color">click to
-                                            browse</span></span>
-                                    <input type="file" id="myFile" name="image" accept="image/*">
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    @error('image')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <fieldset>
-                        <div class="body-title mb-10">Upload Gallery Images</div>
-                        <div class="upload-image mb-16">
-                            {{-- <div class="item">
-                                <img src="" alt="">
-                            </div> --}}
-                            <div id="galUpload" class="item up-load">
-                                <label class="uploadfile" for="gFile">
-                                    <span class="icon">
-                                        <i class="icon-upload-cloud"></i>
-                                    </span>
-                                    <span class="text-tiny">Drop your images here or select <span class="tf-color">click to
-                                            browse</span></span>
-                                    <input type="file" id="gFile" name="images[]" accept="image/*" multiple="">
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    @error('images')
-                        <span class="alert alert-danger text-center" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-
-                    <div class="cols gap22">
-                        <fieldset class="name">
-                            <div class="body-title mb-10">Regular Price <span class="tf-color-1">*</span></div>
-                            <input class="mb-10" type="text" placeholder="Enter regular price" name="regular_price"
-                                tabindex="0" value="{{ old('regular_price') }}" aria-required="true" required="">
-                        </fieldset>
-                        @error('regular_price')
-                            <span class="alert alert-danger text-center" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-
-                        <fieldset class="name">
-                            <div class="body-title mb-10">Sale Price <span class="tf-color-1">*</span></div>
-                            <input class="mb-10" type="text" placeholder="Enter sale price" name="sale_price" tabindex="0"
-                                value="{{ old('sale_price') }}" aria-required="true" required="">
-                        </fieldset>
-                        @error('sale_price')
-                            <span class="alert alert-danger text-center" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="cols gap22">
-                        <fieldset class="name">
-                            <div class="body-title mb-10">SKU <span class="tf-color-1">*</span>
-                            </div>
-                            <input class="mb-10" type="text" placeholder="Enter SKU" name="SKU" tabindex="0"
-                                value="{{ old('SKU') }}" aria-required="true" required="">
-                        </fieldset>
-                        @error('SKU')
-                            <span class="alert alert-danger text-center" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                        <fieldset class="name">
-                            <div class="body-title mb-10">Quantity <span class="tf-color-1">*</span>
-                            </div>
-                            <input class="mb-10" type="text" placeholder="Enter quantity" name="quantity" tabindex="0"
-                                value="{{ old('quantity') }}" aria-required="true" required="">
-                        </fieldset>
-                        @error('quantity')
-                            <span class="alert alert-danger text-center" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="cols gap22">
-                        <fieldset class="name">
-                            <div class="body-title mb-10">Stock</div>
-                            <div class="select mb-10">
-                                <select class="" name="stock_status">
-                                    <option value="instock">InStock</option>
-                                    <option value="outofstock">Out of Stock</option>
-                                </select>
-                            </div>
-                        </fieldset>
-
-                        <fieldset class="name">
-                            <div class="body-title mb-10">Featured</div>
-                            <div class="select mb-10">
-                                <select class="" name="featured">
-                                    <option value="0">No</option>
-                                    <option value="1">Yes</option>
-                                </select>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="cols gap10">
-                        <button class="tf-button w-full" type="submit">Add product</button>
-                    </div>
-                </div>
-            </form>
-            <!-- /form-add-product -->
+        <!-- Header -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <h2 class="text-2xl font-semibold text-gray-800">Add Product</h2>
+            <ul class="flex items-center space-x-2 text-gray-500 text-sm">
+                <li><a href="{{ route('admin.dashboard') }}" class="hover:underline">Dashboard</a></li>
+                <li>/</li>
+                <li><a href="{{ route('products.index') }}" class="hover:underline">Products</a></li>
+                <li>/</li>
+                <li>Add</li>
+            </ul>
         </div>
-        <!-- /main-content-wrap -->
+
+        <!-- Form -->
+        <form method="POST" enctype="multipart/form-data" action="{{ route('products.store') }}"
+            class="space-y-6 bg-white p-6 rounded shadow">
+            @csrf
+
+            <!-- Product Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Product Name <span
+                            class="text-red-500">*</span></label>
+                    <input type="text" name="name" id="name" value="{{ old('name') }}"
+                        class="w-full border px-3 py-2 rounded focus:ring focus:border-gray-300" required>
+                    @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Slug <span class="text-red-500">*</span></label>
+                    <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
+                        class="w-full border px-3 py-2 rounded focus:ring focus:border-gray-300" required>
+                    @error('slug') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Category <span class="text-red-500">*</span></label>
+                    <select name="category_id" class="w-full border px-3 py-2 rounded focus:ring focus:border-gray-300"
+                        required>
+                        <option value="">Choose category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Brand <span class="text-red-500">*</span></label>
+                    <select name="brand_id" class="w-full border px-3 py-2 rounded focus:ring focus:border-gray-300"
+                        required>
+                        <option value="">Choose brand</option>
+                        @foreach ($brands as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <!-- Descriptions -->
+            <div>
+                <label class="block font-medium text-gray-700 mb-1">Short Description <span
+                        class="text-red-500">*</span></label>
+                <textarea name="short_description" rows="3"
+                    class="w-full border px-3 py-2 rounded focus:ring focus:border-gray-300"
+                    required>{{ old('short_description') }}</textarea>
+                @error('short_description') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label class="block font-medium text-gray-700 mb-1">Description <span class="text-red-500">*</span></label>
+                <textarea name="description" rows="5"
+                    class="w-full border px-3 py-2 rounded focus:ring focus:border-gray-300"
+                    required>{{ old('description') }}</textarea>
+                @error('description') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Images -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Main Image</label>
+                    <img id="mainImagePreview" class="mb-2 w-32 h-32 object-cover rounded hidden">
+                    <input type="file" name="image" id="mainImage" accept="image/*">
+                    @error('image') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Gallery Images</label>
+                    <input type="file" name="images[]" id="galleryImages" accept="image/*" multiple>
+                    @error('images') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+            </div>
+
+            <!-- Pricing and Stock -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Regular Price</label>
+                    <input type="text" name="regular_price" value="{{ old('regular_price') }}"
+                        class="w-full border px-3 py-2 rounded">
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Sale Price</label>
+                    <input type="text" name="sale_price" value="{{ old('sale_price') }}"
+                        class="w-full border px-3 py-2 rounded">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">SKU</label>
+                    <input type="text" name="SKU" value="{{ old('SKU') }}" class="w-full border px-3 py-2 rounded">
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Quantity</label>
+                    <input type="text" name="quantity" value="{{ old('quantity') }}"
+                        class="w-full border px-3 py-2 rounded">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Stock Status</label>
+                    <select name="stock_status" class="w-full border px-3 py-2 rounded">
+                        <option value="instock">In Stock</option>
+                        <option value="outofstock">Out of Stock</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-medium text-gray-700 mb-1">Featured</label>
+                    <select name="featured" class="w-full border px-3 py-2 rounded">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">Add
+                Product</button>
+        </form>
     </div>
 @endsection
 
 @push('scripts')
     <script>
-        $(document).ready(function () {
-            $("input[name='name']").on("input", function () {
-                $("input[name='slug']").val(stringToSlug($(this).val()));
-            });
-
-            $("#myFile").on("change", function () {
-                const file = this.files[0];
-                if (file) {
-                    const img = $("#imgpreview img");
-                    img.attr("src", URL.createObjectURL(file));
-                    $("#imgpreview").fadeIn();
-                }
-            });
-
-            $("#gFile").on("change", function () {
-                $(".gallery-preview-item").remove();
-                const files = this.files;
-                if (files.length > 0) {
-                    $.each(files, function (index, file) {
-
-                        const url = URL.createObjectURL(file);
-
-                        const item = `
-                                <div class="item gallery-preview-item" style="margin-right: 10px; margin-bottom: 10px;">
-                                    <img src="${url}" class="effect8" 
-                                            style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
-                                </div>`;
-
-                        $("#galUpload").before(item);
-                    });
-                }
-            });
+        // Auto-slug
+        const nameInput = document.getElementById('name');
+        const slugInput = document.getElementById('slug');
+        nameInput.addEventListener('input', () => {
+            let slug = nameInput.value.trim().toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-');
+            slugInput.value = slug;
         });
 
-        function stringToSlug(str) {
-            return str
-                .trim()
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .replace(/[^a-z0-9\s-]/g, "")
-                .replace(/\s+/g, "-")
-                .replace(/-+/g, "-");
-        }
+        // Main image preview
+        const mainImageInput = document.getElementById('mainImage');
+        const mainImagePreview = document.getElementById('mainImagePreview');
+        mainImageInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (file) {
+                mainImagePreview.src = URL.createObjectURL(file);
+                mainImagePreview.classList.remove('hidden');
+            }
+        });
+
+        // Gallery preview
+        const galleryInput = document.getElementById('galleryImages');
+        galleryInput.addEventListener('change', e => {
+            const container = document.createElement('div');
+            container.className = 'flex flex-wrap gap-2 mb-2';
+            const files = e.target.files;
+            Array.from(files).forEach(file => {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.className = 'w-24 h-24 object-cover rounded';
+                container.appendChild(img);
+            });
+            galleryInput.parentNode.insertBefore(container, galleryInput);
+        });
     </script>
 @endpush
